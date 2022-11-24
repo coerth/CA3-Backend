@@ -10,6 +10,8 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserFacadeTest {
@@ -53,5 +55,14 @@ public class UserFacadeTest {
         boolean decryptPass = BCrypt.checkpw(passExpected,returnedPass);
         assertTrue(decryptPass);
 
+    }
+
+    @Test
+    void createUserTest()
+    {
+        User newUser = new User("Denis", "Denis123");
+        User result = userFacade.createUser(newUser);
+
+        assertNotNull(result);
     }
 }

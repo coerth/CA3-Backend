@@ -43,4 +43,14 @@ public class UserFacade {
         return user;
     }
 
+    public User createUser(User user)
+    {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.persist(user);
+        } finally {
+            em.close();
+        }
+        return user;
+    }
 }
