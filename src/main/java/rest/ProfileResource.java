@@ -41,10 +41,10 @@ public class ProfileResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{id]")
-    @RolesAllowed("admin")
-    public String getFromAdmin() {
-        String thisuser = securityContext.getUserPrincipal().getName();
-        return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
+
+    public Response getAllProfiles() {
+        String response = "Oi";
+
+        return Response.ok().entity(GSON.toJson(response)).build();
     }
 }
