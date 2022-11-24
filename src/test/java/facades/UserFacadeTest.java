@@ -65,4 +65,5 @@ public class UserFacadeTest {
 
         assertNotNull(result);
     }
+
 }
