@@ -53,4 +53,24 @@ public class UserFacade {
         }
         return user;
     }
+
+    public Boolean deleteUser(String name){
+        EntityManager em = emf.createEntityManager();
+        User u = em.find(User.class, name);
+        boolean response = false;
+
+        try{
+            em.getTransaction().begin();
+            em.remove(u);
+            em.getTransaction().commit();
+            u = em.find(User.class, name);
+        } finally {
+            em.close();
+        }
+
+        if(u == null){
+            response = true;
+        }
+        return response;
+    }
 }

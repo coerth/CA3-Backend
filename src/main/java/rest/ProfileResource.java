@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dtos.ProfileDto;
 import entities.User;
 import facades.ProfileFacade;
+import facades.UserFacade;
 import utils.EMF_Creator;
 
 import javax.annotation.security.RolesAllowed;
@@ -20,6 +21,7 @@ public class ProfileResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final ProfileFacade FACADE =  ProfileFacade.getInstance(EMF);
+    private static final UserFacade USERFACADE =  UserFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -46,5 +48,13 @@ public class ProfileResource {
         String response = "Oi";
 
         return Response.ok().entity(GSON.toJson(response)).build();
+    }
+
+    @DELETE
+    @Path("{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+
+    public Response deleteProfiles(@PathParam("username") String username){
+        return Response.ok().entity(GSON.toJson(USERFACADE.deleteUser(username))).build();
     }
 }
