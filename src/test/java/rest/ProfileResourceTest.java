@@ -70,7 +70,7 @@ public class ProfileResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
+        //EntityManager em = emf.createEntityManager();
         /*c1 = new CityInfo("2630", "Værebro");
         c2 = new CityInfo("8880", "Aalborg");
         a1 = new Address( "Bælgevej 16", "Til højre",c1);
@@ -98,42 +98,43 @@ public class ProfileResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/Profile").then().statusCode(200);
+        given().when().get("/profile").then().statusCode(200);
     }
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
         given().log().all()
-                .when().get("/Profile")
+                .when().get("/profile")
                 .then().statusCode(200);
     }
     @Test
     public void testLogResponse() {
         System.out.println("Testing logging response details");
         given()
-                .when().get("/Profile")
+                .when().get("/profile")
                 .then().log().body().statusCode(200);
     }
 
     @Test
     public void create() {
-        Profile p = new Profile("myemail@email.com", "Jörg","Hilfbrand", a1);
-        ProfileDto ProfileDto = new ProfileDto(p);
-        String requestBody = GSON.toJson(ProfileDto);
+        ProfileDto profileDto = new ProfileDto("morten@koksikoden.dk", "morten", "Morten","spyflue");
+
+        String requestBody = GSON.toJson(profileDto);
+        System.out.println(requestBody);
 
         given()
                 .header("Content-type", ContentType.JSON)
                 .and()
                 .body(requestBody)
                 .when()
-                .post("/Profile")
+                .post("/profile")
                 .then()
                 .assertThat()
                 .statusCode(200)
                 .body("id", notNullValue())
-                .body("email", equalTo(p.getEmail()))
-                .body("firstName", equalTo(p.getFirstName()))
-                .body("lastName", equalTo(p.getLastName()));
+                .body("email", equalTo(profileDto.getEmail()))
+                .body("name", equalTo(profileDto.getName()));
+                //.body("userName", equalTo(profileDto.getUser().getUserName()));
     }
     /*@Test
     public void updateTest() {
