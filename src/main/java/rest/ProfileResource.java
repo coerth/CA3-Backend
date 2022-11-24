@@ -22,12 +22,9 @@ public class ProfileResource {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final ProfileFacade FACADE =  ProfileFacade.getInstance(EMF);
 
-<<<<<<< HEAD
     private static final UserFacade USERFACADE =  UserFacade.getUserFacade(EMF);
 
-=======
-    private static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
->>>>>>> 0c604dff3135b0074157a0f1ae3add11a0cd6dc0
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
