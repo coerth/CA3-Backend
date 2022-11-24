@@ -28,15 +28,17 @@ public class ProfileFacade
         EntityManager em = emf.createEntityManager();
         User user = new User(profileDto.getUser());
         Profile profile = new Profile(profileDto, user);
-
         try {
+            em.getTransaction().begin();
             em.persist(user);
             em.persist(profile);
+            em.getTransaction().commit();
 
         } finally {
             em.close();
         }
 
+        System.out.println(profile);
         return new ProfileDto(profile);
     }
 }
