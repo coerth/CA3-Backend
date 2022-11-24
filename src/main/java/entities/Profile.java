@@ -24,6 +24,11 @@ public class Profile {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_name", nullable = false)
+    private entities.User userName;
+
     @OneToMany(mappedBy = "profile")
     private Set<Journey> journeys = new LinkedHashSet<>();
 
@@ -49,6 +54,14 @@ public class Profile {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public entities.User getUserName() {
+        return userName;
+    }
+
+    public void setUserName(entities.User userName) {
+        this.userName = userName;
     }
 
     public Set<Journey> getJourneys() {

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "trip")
 public class Trip {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,8 +25,18 @@ public class Trip {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "journey_id", nullable = false)
+    private Journey journey;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fuel_id", nullable = false)
     private Fuel fuel;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "transportation_id", nullable = false)
+    private Transportation transportation;
 
     public Integer getId() {
         return id;
@@ -59,12 +70,28 @@ public class Trip {
         this.cost = cost;
     }
 
+    public Journey getJourney() {
+        return journey;
+    }
+
+    public void setJourney(Journey journey) {
+        this.journey = journey;
+    }
+
     public Fuel getFuel() {
         return fuel;
     }
 
     public void setFuel(Fuel fuel) {
         this.fuel = fuel;
+    }
+
+    public Transportation getTransportation() {
+        return transportation;
+    }
+
+    public void setTransportation(Transportation transportation) {
+        this.transportation = transportation;
     }
 
 }

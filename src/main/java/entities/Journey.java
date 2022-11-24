@@ -36,6 +36,16 @@ public class Journey {
     @Column(name = "total_cost", nullable = false)
     private Float totalCost;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "profile_id", nullable = false)
+    private Profile profile;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "journey_type_id", nullable = false)
+    private JourneyType journeyType;
+
     @OneToMany(mappedBy = "journey")
     private Set<Trip> trips = new LinkedHashSet<>();
 
@@ -85,6 +95,22 @@ public class Journey {
 
     public void setTotalCost(Float totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public JourneyType getJourneyType() {
+        return journeyType;
+    }
+
+    public void setJourneyType(JourneyType journeyType) {
+        this.journeyType = journeyType;
     }
 
     public Set<Trip> getTrips() {
