@@ -16,7 +16,9 @@ public class ProfileResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final ProfileFacade FACADE =  ProfileFacade.getInstance(EMF);
+
     private static final UserFacade USERFACADE =  UserFacade.getUserFacade(EMF);
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -49,8 +51,8 @@ public class ProfileResource {
     @DELETE
     @Path("{username}")
     @Produces(MediaType.APPLICATION_JSON)
-
     public Response deleteProfiles(@PathParam("username") String username){
         return Response.ok().entity(GSON.toJson(USERFACADE.deleteUser(username))).build();
+
     }
 }
