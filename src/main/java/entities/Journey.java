@@ -1,0 +1,98 @@
+package entities;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "journey")
+public class Journey {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "name", nullable = false, length = 45)
+    private String name;
+
+    @NotNull
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
+
+    @NotNull
+    @Column(name = "total_emission", nullable = false)
+    private Float totalEmission;
+
+    @NotNull
+    @Column(name = "total_distance", nullable = false)
+    private Float totalDistance;
+
+    @NotNull
+    @Column(name = "total_cost", nullable = false)
+    private Float totalCost;
+
+    @OneToMany(mappedBy = "journey")
+    private Set<Trip> trips = new LinkedHashSet<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Float getTotalEmission() {
+        return totalEmission;
+    }
+
+    public void setTotalEmission(Float totalEmission) {
+        this.totalEmission = totalEmission;
+    }
+
+    public Float getTotalDistance() {
+        return totalDistance;
+    }
+
+    public void setTotalDistance(Float totalDistance) {
+        this.totalDistance = totalDistance;
+    }
+
+    public Float getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Float totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public Set<Trip> getTrips() {
+        return trips;
+    }
+
+    public void setTrips(Set<Trip> trips) {
+        this.trips = trips;
+    }
+
+}
