@@ -69,8 +69,8 @@ public class UserFacadeTest {
 
     @Test
     void deleteUsertest() {
-        User u = userFacade.deleteUser(u1.getUserName());
-        assertEquals(u, u1);
+        boolean response = userFacade.deleteUser(u1.getUserName());
+        assertEquals(true, response);
     }
 
 }
