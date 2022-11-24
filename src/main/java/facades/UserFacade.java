@@ -54,10 +54,10 @@ public class UserFacade {
         return user;
     }
 
+
     public Boolean deleteUser(String name){
         EntityManager em = emf.createEntityManager();
         User u = em.find(User.class, name);
-
 
         try{
             em.getTransaction().begin();
@@ -73,5 +73,6 @@ public class UserFacade {
             return true;
         }
         return false;
+
     }
 }
