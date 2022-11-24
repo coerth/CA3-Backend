@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class ProfileDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @Size(max = 45)
     @NotNull
     private final String email;
@@ -23,6 +23,18 @@ public class ProfileDto implements Serializable {
         this.email = email;
         this.name = name;
         this.user = user;
+    }
+
+    public ProfileDto(String email, String name, UserDto user) {
+        this.email = email;
+        this.name = name;
+        this.user = user;
+    }
+    public ProfileDto(String email, String name, String userName, String userPass) {
+        this.email = email;
+        this.name = name;
+        this.user = new UserDto(userName, userPass);
+
     }
 
     public ProfileDto(Profile profile) {
