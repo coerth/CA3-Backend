@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Profile;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,13 +16,20 @@ public class ProfileDto implements Serializable {
     @NotNull
     private final String name;
     @NotNull
-    private final UserDto userName;
+    private final UserDto user;
 
-    public ProfileDto(Integer id, String email, String name, UserDto userName) {
+    public ProfileDto(Integer id, String email, String name, UserDto user) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.userName = userName;
+        this.user = user;
+    }
+
+    public ProfileDto(Profile profile) {
+        this.id = profile.getId();
+        this.email = profile.getEmail();
+        this.name = profile.getName();
+        this.user = new UserDto(profile.getUserName().getUserName(), profile.getEmail());
     }
 
     public Integer getId() {
@@ -35,8 +44,8 @@ public class ProfileDto implements Serializable {
         return name;
     }
 
-    public UserDto getUserName() {
-        return userName;
+    public UserDto getUser() {
+        return user;
     }
 
     @Override
@@ -47,12 +56,12 @@ public class ProfileDto implements Serializable {
         return Objects.equals(this.id, entity.id) &&
                 Objects.equals(this.email, entity.email) &&
                 Objects.equals(this.name, entity.name) &&
-                Objects.equals(this.userName, entity.userName);
+                Objects.equals(this.user, entity.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, name, userName);
+        return Objects.hash(id, email, name, user);
     }
 
     @Override
@@ -61,19 +70,30 @@ public class ProfileDto implements Serializable {
                 "id = " + id + ", " +
                 "email = " + email + ", " +
                 "name = " + name + ", " +
-                "userName = " + userName + ")";
+                "userName = " + user
+                + ")";
     }
 
     public static class UserDto implements Serializable {
         @NotNull
         private final String userName;
+        private String userPass;
 
         public UserDto(String userName) {
             this.userName = userName;
         }
 
+        public UserDto(String userName, String userPass) {
+            this.userName = userName;
+            this.userPass = userPass;
+        }
+
         public String getUserName() {
             return userName;
+        }
+
+        public String getUserPass() {
+            return userPass;
         }
 
         @Override

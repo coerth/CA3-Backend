@@ -1,8 +1,13 @@
 package facades;
 
+import dtos.ProfileDto;
+import entities.Profile;
+import entities.User;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-public class ProfileFacade 
+public class ProfileFacade
 {
     private static EntityManagerFactory emf;
     private static ProfileFacade instance;
@@ -18,4 +23,20 @@ public class ProfileFacade
         return instance;
     }
 
+    public ProfileDto createProfile(ProfileDto profileDto)
+    {
+        EntityManager em = emf.createEntityManager();
+        User user = new User(profileDto.getUser());
+        Profile profile = new Profile(profileDto, user);
+
+        try {
+            em.persist(user);
+            em.persist(profile);
+
+        } finally {
+            em.close();
+        }
+
+        return new ProfileDto(profile);
+    }
 }
