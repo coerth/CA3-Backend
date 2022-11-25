@@ -25,6 +25,8 @@ public class ProfileFacade
 
     public ProfileDto createProfile(ProfileDto profileDto)
     {
+        System.out.println(profileDto);
+
         EntityManager em = emf.createEntityManager();
         User user = new User(profileDto.getUser());
         Profile profile = new Profile(profileDto, user);
