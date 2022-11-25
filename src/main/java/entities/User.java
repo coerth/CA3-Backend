@@ -33,6 +33,10 @@ public class User implements Serializable {
     @ManyToMany
     private List<Role> roleList = new ArrayList<>();
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @PrimaryKeyJoinColumn(name = "user_name", referencedColumnName = "user_name")
+    private Profile profile;
+
     public List<String> getRolesAsStrings() {
         if (roleList.isEmpty()) {
             return null;

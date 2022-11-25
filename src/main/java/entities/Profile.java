@@ -27,9 +27,8 @@ public class Profile {
     private String name;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_name", nullable = false)
-    private entities.User userName;
+    @OneToOne(mappedBy = "profile")
+    private User userName;
 
     @OneToMany(mappedBy = "profile")
     private Set<Journey> journeys = new LinkedHashSet<>();
@@ -42,6 +41,13 @@ public class Profile {
         this.email = profileDto.getEmail();
         this.name = profileDto.getName();
         this.userName = user;
+    }
+
+    public Profile(Integer id, String email, String name, User userName) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.userName = userName;
     }
 
     public Integer getId() {
