@@ -131,7 +131,7 @@ public class ProfileResourceTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                //.body("id", notNullValue())
+                .body("id", notNullValue())
                 .body("email", equalTo(profileDto.getEmail()))
                 .body("name", equalTo(profileDto.getName()));
                 //.body("userName", equalTo(profileDto.getUser().getUserName()));

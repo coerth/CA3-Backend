@@ -84,4 +84,12 @@ public class Profile {
         this.journeys = journeys;
     }
 
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", userName=" + userName;
+    }
 }
