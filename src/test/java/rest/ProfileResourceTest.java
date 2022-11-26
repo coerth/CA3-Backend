@@ -93,8 +93,6 @@ public class ProfileResourceTest {
         }finally {
             em.close();
         }
-
-
     }
 
     @Test
