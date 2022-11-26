@@ -38,7 +38,10 @@ public class Profile {
     }
 
     public Profile(ProfileDto profileDto, User user) {
-        this.id = profileDto.getId();
+        if(profileDto.getId() != null)
+        {
+            this.id = profileDto.getId();
+        }
         this.email = profileDto.getEmail();
         this.name = profileDto.getName();
         this.userName = user;

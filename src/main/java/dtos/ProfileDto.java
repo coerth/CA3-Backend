@@ -16,7 +16,9 @@ public class ProfileDto implements Serializable {
     @NotNull
     private final String name;
     @NotNull
-    private final UserDto user;
+    private UserDto user;
+    private String userName;
+    private String userPass;
 
     public ProfileDto(Integer id, String email, String name, UserDto user) {
         this.id = id;
@@ -25,15 +27,12 @@ public class ProfileDto implements Serializable {
         this.user = user;
     }
 
-    public ProfileDto(String email, String name, UserDto user) {
-        this.email = email;
-        this.name = name;
-        this.user = user;
-    }
     public ProfileDto(String email, String name, String userName, String userPass) {
         this.email = email;
         this.name = name;
-        this.user = new UserDto(userName, userPass);
+        this.userName= userName;
+        this.userPass = userPass;
+        //this.user = new UserDto(userName, userPass);
 
     }
 
@@ -71,24 +70,39 @@ public class ProfileDto implements Serializable {
                 Objects.equals(this.user, entity.user);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, name, user);
+
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPass() {
+        return userPass;
+    }
+
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "email = " + email + ", " +
-                "name = " + name + ", " +
-                "userName = " + user
-                + ")";
+        return "ProfileDto{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPass='" + userPass + '\'' +
+                '}';
     }
 
-    public static class UserDto implements Serializable {
+    public class UserDto implements Serializable {
         @NotNull
-        private final String userName;
+        private String userName;
         private String userPass;
 
         public UserDto(String userName) {
@@ -123,8 +137,10 @@ public class ProfileDto implements Serializable {
 
         @Override
         public String toString() {
-            return getClass().getSimpleName() + "(" +
-                    "userName = " + userName + ")";
+            return "UserDto{" +
+                    "userName='" + userName + '\'' +
+                    ", userPass='" + userPass + '\'' +
+                    '}';
         }
     }
 }

@@ -34,7 +34,7 @@ public class ProfileResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProfile(String content) throws Exception {
         ProfileDto profileDtoFromJSON = GSON.fromJson(content, ProfileDto.class);
-        System.out.println(profileDtoFromJSON);
+
          ProfileDto profileDto = FACADE.createProfile(profileDtoFromJSON);
 
          return Response.ok().entity(GSON.toJson(profileDto)).build();
