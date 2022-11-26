@@ -16,23 +16,23 @@ public class ProfileDto implements Serializable {
     @NotNull
     private final String name;
     @NotNull
-    private UserDto user;
-    private String userName;
-    private String userPass;
+    private UserDto userDto;
+    /*private String userName;
+    private String userPass;*/
 
-    public ProfileDto(Integer id, String email, String name, UserDto user) {
+    public ProfileDto(Integer id, String email, String name, UserDto userDto) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.user = user;
+        this.userDto = userDto;
     }
 
     public ProfileDto(String email, String name, String userName, String userPass) {
         this.email = email;
         this.name = name;
-        this.userName= userName;
-        this.userPass = userPass;
-        //this.user = new UserDto(userName, userPass);
+        /*this.userName= userName;
+        this.userPass = userPass;*/
+        this.userDto = new UserDto(userName, userPass);
 
     }
 
@@ -40,7 +40,7 @@ public class ProfileDto implements Serializable {
         this.id = profile.getId();
         this.email = profile.getEmail();
         this.name = profile.getName();
-        this.user = new UserDto(profile.getUserName().getUserName(), profile.getEmail());
+        this.userDto = new UserDto(profile.getUserName().getUserName(), profile.getEmail());
     }
 
     public Integer getId() {
@@ -55,8 +55,8 @@ public class ProfileDto implements Serializable {
         return name;
     }
 
-    public UserDto getUser() {
-        return user;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
     @Override
@@ -67,13 +67,13 @@ public class ProfileDto implements Serializable {
         return Objects.equals(this.id, entity.id) &&
                 Objects.equals(this.email, entity.email) &&
                 Objects.equals(this.name, entity.name) &&
-                Objects.equals(this.user, entity.user);
+                Objects.equals(this.userDto, entity.userDto);
     }
 
 
 
 
-    public String getUserName() {
+    /*public String getUserName() {
         return userName;
     }
 
@@ -87,7 +87,7 @@ public class ProfileDto implements Serializable {
 
     public void setUserPass(String userPass) {
         this.userPass = userPass;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -95,8 +95,7 @@ public class ProfileDto implements Serializable {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPass='" + userPass + '\'' +
+                ", "+ userDto +
                 '}';
     }
 
@@ -105,9 +104,9 @@ public class ProfileDto implements Serializable {
         private String userName;
         private String userPass;
 
-        public UserDto(String userName) {
+        /*public UserDto(String userName) {
             this.userName = userName;
-        }
+        }*/
 
         public UserDto(String userName, String userPass) {
             this.userName = userName;

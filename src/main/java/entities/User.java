@@ -31,6 +31,9 @@ public class User implements Serializable {
             @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
     @ManyToMany
     private List<Role> roleList = new ArrayList<>();
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @PrimaryKeyJoinColumn(name = "user_name", referencedColumnName = "user_name")
+    private Profile profile;
 
     public List<String> getRolesAsStrings() {
         if (roleList.isEmpty()) {
@@ -52,11 +55,11 @@ public class User implements Serializable {
 
     }
 
-    //TODO Change when password is hashed
-    public boolean verifyPassword(String pw) {
-        return BCrypt.checkpw(pw, userPass);
+    public User(String userName, String userPass, Profile profile) {
+        this.userName = userName;
+        this.userPass = userPass;
+        this.profile = profile;
     }
-
     public User(String userName, String userPass) {
         this.userName = userName;
 
@@ -64,6 +67,19 @@ public class User implements Serializable {
 
     }
 
+    //TODO Change when password is hashed
+    public boolean verifyPassword(String pw) {
+        return BCrypt.checkpw(pw, userPass);
+    }
+
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
     public String getUserName() {
         return userName;
@@ -95,8 +111,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
+        return  "userName='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
                 '}';
     }

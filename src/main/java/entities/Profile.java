@@ -27,9 +27,8 @@ public class Profile {
     private String name;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_name", nullable = false)
-    private entities.User userName;
+    @OneToOne(mappedBy = "profile")
+    private User userName;
 
     @OneToMany(mappedBy = "profile")
     private Set<Journey> journeys = new LinkedHashSet<>();
@@ -93,6 +92,6 @@ public class Profile {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", userName=" + userName;
+                "," + userName;
     }
 }
