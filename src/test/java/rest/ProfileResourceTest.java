@@ -89,20 +89,6 @@ public class ProfileResourceTest {
             em.close();
         }
 
-
-        u1 = new User("John", "123");
-        u2 = new User("Bertha", "prop");
-        p1 = new Profile(1,"a@a.dk", "name", u1);
-
-        try{
-            em.getTransaction().begin();
-            em.persist(u1);
-            em.persist(u2);
-            em.persist(p1);
-            em.getTransaction().commit();
-        }finally {
-            em.close();
-        }
     }
 
     @Test
@@ -170,7 +156,7 @@ public class ProfileResourceTest {
     public void delete(){
         given()
                 .contentType(ContentType.JSON)
-                .delete("/profile/"+ u1.getId())
+                .delete("/profile/"+ p1.getId())
                 .then()
                 .statusCode(200)
                 .extract().response().as(Boolean.class);
