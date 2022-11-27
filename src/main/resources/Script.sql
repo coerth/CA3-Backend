@@ -33,14 +33,29 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `CA3`.`users`
+-- Table `CA3`.`journey_type`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CA3`.`users` ;
+DROP TABLE IF EXISTS `CA3`.`journey_type` ;
 
-CREATE TABLE IF NOT EXISTS `CA3`.`users` (
+CREATE TABLE IF NOT EXISTS `CA3`.`journey_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `CA3`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `CA3`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `CA3`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(25) NOT NULL,
   `user_pass` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`user_name`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -55,28 +70,14 @@ CREATE TABLE IF NOT EXISTS `CA3`.`profile` (
   `email` VARCHAR(45) NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `user_name` VARCHAR(25) NOT NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_profile_users1_idx` (`user_name` ASC) VISIBLE,
+  INDEX `fk_profile_users1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_profile_users1`
-    FOREIGN KEY (`user_name`)
-    REFERENCES `CA3`.`users` (`user_name`)
+    FOREIGN KEY (`user_id`)
+    REFERENCES `CA3`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `CA3`.`journey_type`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `CA3`.`journey_type` ;
-
-CREATE TABLE IF NOT EXISTS `CA3`.`journey_type` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -99,29 +100,26 @@ CREATE TABLE IF NOT EXISTS `CA3`.`journey` (
   PRIMARY KEY (`id`),
   INDEX `fk_journey_profile1_idx` (`profile_id` ASC) VISIBLE,
   INDEX `fk_journey_journey_type1_idx` (`journey_type_id` ASC) VISIBLE,
-  CONSTRAINT `fk_journey_profile1`
-    FOREIGN KEY (`profile_id`)
-    REFERENCES `CA3`.`profile` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_journey_journey_type1`
     FOREIGN KEY (`journey_type_id`)
-    REFERENCES `CA3`.`journey_type` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `CA3`.`journey_type` (`id`),
+  CONSTRAINT `fk_journey_profile1`
+    FOREIGN KEY (`profile_id`)
+    REFERENCES `CA3`.`profile` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `CA3`.`roles`
+-- Table `CA3`.`role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CA3`.`roles` ;
+DROP TABLE IF EXISTS `CA3`.`role` ;
 
-CREATE TABLE IF NOT EXISTS `CA3`.`roles` (
+CREATE TABLE IF NOT EXISTS `CA3`.`role` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`role_name`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -158,45 +156,39 @@ CREATE TABLE IF NOT EXISTS `CA3`.`trip` (
   INDEX `fk_trip_journey1_idx` (`journey_id` ASC) VISIBLE,
   INDEX `fk_trip_fuel1_idx` (`fuel_id` ASC) VISIBLE,
   INDEX `fk_trip_transportation1_idx` (`transportation_id` ASC) VISIBLE,
-  CONSTRAINT `fk_trip_journey1`
-    FOREIGN KEY (`journey_id`)
-    REFERENCES `CA3`.`journey` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_trip_fuel1`
     FOREIGN KEY (`fuel_id`)
-    REFERENCES `CA3`.`fuel` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `CA3`.`fuel` (`id`),
+  CONSTRAINT `fk_trip_journey1`
+    FOREIGN KEY (`journey_id`)
+    REFERENCES `CA3`.`journey` (`id`),
   CONSTRAINT `fk_trip_transportation1`
     FOREIGN KEY (`transportation_id`)
-    REFERENCES `CA3`.`transportation` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `CA3`.`transportation` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `CA3`.`users_roles`
+-- Table `CA3`.`user_has_role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `CA3`.`users_roles` ;
+DROP TABLE IF EXISTS `CA3`.`user_has_role` ;
 
-CREATE TABLE IF NOT EXISTS `CA3`.`users_roles` (
-  `role_name` VARCHAR(20) NOT NULL,
-  `user_name` VARCHAR(25) NOT NULL,
-  PRIMARY KEY (`role_name`, `user_name`),
-  INDEX `fk_roles_has_users_users1_idx` (`user_name` ASC) VISIBLE,
-  INDEX `fk_roles_has_users_roles1_idx` (`role_name` ASC) VISIBLE,
-  CONSTRAINT `fk_roles_has_users_roles1`
-    FOREIGN KEY (`role_name`)
-    REFERENCES `CA3`.`roles` (`role_name`)
+CREATE TABLE IF NOT EXISTS `CA3`.`user_has_role` (
+  `user_id` INT NOT NULL,
+  `role_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `role_id`),
+  INDEX `fk_user_has_role_role1_idx` (`role_id` ASC) VISIBLE,
+  INDEX `fk_user_has_role_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_has_role_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `CA3`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_roles_has_users_users1`
-    FOREIGN KEY (`user_name`)
-    REFERENCES `CA3`.`users` (`user_name`)
+  CONSTRAINT `fk_user_has_role_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `CA3`.`role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
