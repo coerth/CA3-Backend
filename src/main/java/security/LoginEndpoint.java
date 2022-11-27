@@ -10,7 +10,10 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import dtos.ProfileDto;
+import entities.Profile;
 import entities.User;
+import facades.ProfileFacade;
 import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +39,8 @@ public class LoginEndpoint {
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
 
+    public static final ProfileFacade PROFILE_FACADE = ProfileFacade.getInstance(EMF);
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,11 +56,13 @@ public class LoginEndpoint {
         }
 
         try {
-            User user = USER_FACADE.getVeryfiedUser(username, password);
-            String token = createToken(username, user.getRolesAsStrings());
+            ProfileDto profileDto = PROFILE_FACADE.getVeryfiedProfile(username, password);
+            String token = createToken(username, profileDto.getUser().getRolesAsStrings());
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("username", username);
             responseJson.addProperty("token", token);
+            responseJson.addProperty("profile", profileDto.getId());
+            System.out.println(new Gson().toJson(responseJson));
             return Response.ok(new Gson().toJson(responseJson)).build();
 
         } catch (JOSEException | AuthenticationException ex) {

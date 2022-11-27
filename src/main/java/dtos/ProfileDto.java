@@ -1,13 +1,13 @@
 package dtos;
 
 import entities.Profile;
+import entities.Role;
 import entities.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link entities.Profile} entity
@@ -97,13 +97,16 @@ public class ProfileDto implements Serializable {
         private final String userName;
         @Size(max = 255)
         private final String userPass;
-        //private final Set<RoleDto> roles;
+        private Set<RoleDto> roles = new LinkedHashSet<>();
 
-        public UserDto(Integer id, String userName, String userPass) {
+        public UserDto(Integer id, String userName, String userPass, Set<Role> roles) {
             this.id = id;
             this.userName = userName;
             this.userPass = userPass;
-            //this.roles = roles;
+            if(roles != null ){
+            for (Role role : roles){
+                this.roles.add(new RoleDto(role.getId(), role.getRoleName()));
+            }}
         }
 
         //TODO Kig på Roles
@@ -111,7 +114,9 @@ public class ProfileDto implements Serializable {
             this.id = user.getId();
             this.userName = user.getUserName();
             this.userPass = user.getUserPass();
-            //this.roles = user.getRoles();
+            for (Role role : user.getRoles()){
+                this.roles.add(new RoleDto(role.getId(), role.getRoleName()));
+            }
         }
 
         public UserDto(String userName, String userPass) {
@@ -131,10 +136,20 @@ public class ProfileDto implements Serializable {
             return userPass;
         }
 
-        /*public Set<RoleDto> getRoles() {
+        public Set<RoleDto> getRoles() {
             return roles;
-        }*/
+        }
 
+        public List<String> getRolesAsStrings() {
+            if (roles.isEmpty()) {
+                return null;
+            }
+            List<String> rolesAsStrings = new ArrayList<>();
+            roles.forEach((role) -> {
+                rolesAsStrings.add(role.getRoleName());
+            });
+            return rolesAsStrings;
+        }
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;

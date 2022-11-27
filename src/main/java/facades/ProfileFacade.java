@@ -3,14 +3,18 @@ package facades;
 import dtos.ProfileDto;
 import entities.Profile;
 import entities.User;
+import security.errorhandling.AuthenticationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 public class ProfileFacade
 {
     private static EntityManagerFactory emf;
     private static ProfileFacade instance;
+
+    UserFacade userFacade = UserFacade.getUserFacade(emf);
 
     public ProfileFacade() {
     }
@@ -23,6 +27,20 @@ public class ProfileFacade
         return instance;
     }
 
+    public ProfileDto getVeryfiedProfile(String username, String password) throws AuthenticationException{
+        EntityManager em = emf.createEntityManager();
+        Profile profile;
+        User user;
+        try{
+            user = userFacade.getVeryfiedUser(username, password);
+            TypedQuery<Profile> query = em.createQuery("SELECT p FROM Profile p WHERE p.user.id = :userid", Profile.class);
+            query.setParameter("userid", user.getId());
+            profile = query.getSingleResult();
+        } finally {
+            em.close();
+        }
+        return new ProfileDto(profile);
+    }
     public ProfileDto createProfile(ProfileDto profileDto)
     {
 
