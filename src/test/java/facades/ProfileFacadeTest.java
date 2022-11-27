@@ -16,7 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProfileFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static ProfileFacade ProfileFacade;
+    private static ProfileFacade profileFacade;
+
+    User u1, u2;
 
     public ProfileFacadeTest() {
     }
@@ -24,15 +26,15 @@ public class ProfileFacadeTest {
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        ProfileFacade = ProfileFacade.getInstance(emf);
+        profileFacade = ProfileFacade.getInstance(emf);
     }
 
     @BeforeEach
     public void setup() {
         EntityManager em = emf.createEntityManager();
 
-        User u1 = new User("John", "123");
-        User u2 = new User("Bertha", "prop");
+        u1 = new User("John", "123");
+        u2 = new User("Bertha", "prop");
 
         try {
             em.getTransaction().begin();
@@ -50,8 +52,10 @@ public class ProfileFacadeTest {
     void createProfileTest()
     {
 
+
         ProfileDto newProfile = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
-        ProfileDto result = ProfileFacade.createProfile(newProfile);
+        ProfileDto result = profileFacade.createProfile(newProfile);
+
 
         assertNotNull(result);
         assertEquals(newProfile.getName(), result.getName());

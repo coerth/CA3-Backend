@@ -1,14 +1,15 @@
 package entities;
 
-import dtos.ProfileDto;
-import org.mindrot.jbcrypt.BCrypt;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
+import dtos.ProfileDto;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -115,8 +116,27 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getUserName().equals(user.getUserName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserName());
+    }
+
+    @Override
+
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", userPass='" + userPass + '\'' +
+                '}';
     }
 
 }
