@@ -2,6 +2,13 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+<<<<<<< HEAD
+=======
+import dtos.ProfileDto;
+import entities.Profile;
+import entities.User;
+import entities.Role;
+>>>>>>> 551e1d3 (delete rest test passed)
 
 import dtos.ProfileDto;
 import io.restassured.RestAssured;
@@ -33,6 +40,10 @@ public class ProfileResourceTest {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
+
+    User u1, u2;
+
+    Profile p1;
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
 
@@ -67,28 +78,22 @@ public class ProfileResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-        //EntityManager em = emf.createEntityManager();
-        /*c1 = new CityInfo("2630", "Værebro");
-        c2 = new CityInfo("8880", "Aalborg");
-        a1 = new Address( "Bælgevej 16", "Til højre",c1);
-        a2 = new Address("Paradisæblevej 111", "Her", c2);
-        p1 = new Profile("Arnemail@email.com", "Arne", "Bjarne", a1);
-        p2 = new Profile("Johns@email.com", "John", "Larsen", a2);
-        try {
+        EntityManager em = emf.createEntityManager();
+
+        u1 = new User("John", "123");
+        u2 = new User("Bertha", "prop");
+        p1 = new Profile(1,"a@a.dk", "name",  u1);
+
+        try{
             em.getTransaction().begin();
-//            em.createNamedQuery("Profile.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-            em.persist(c1);
-            em.persist(c2);
-            em.persist(a1);
-            em.persist(a2);
+            em.persist(u1);
+            em.persist(u2);
             em.persist(p1);
-            em.persist(p2);
             em.getTransaction().commit();
-        } finally {
+        }finally {
             em.close();
-        }*/
+        }
+
 
     }
 
@@ -152,4 +157,14 @@ public class ProfileResourceTest {
                 .body("email", equalTo("MyNewEmail@email.com"))
                 .body("firstName", equalTo("Arne"));
     }*/
+
+    @Test
+    public void delete(){
+        given()
+                .contentType(ContentType.JSON)
+                .delete("/profile/"+ u1.getUserName())
+                .then()
+                .statusCode(200)
+                .extract().response().as(Boolean.class);
+    }
 }

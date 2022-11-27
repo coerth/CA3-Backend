@@ -2,7 +2,9 @@ package facades;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
+import entities.Profile;
 import entities.User;
 import security.errorhandling.AuthenticationException;
 
@@ -56,15 +58,17 @@ public class UserFacade {
     }
 
 
-    public Boolean deleteUser(String name){
+    public Boolean deleteUser(String username){
         EntityManager em = emf.createEntityManager();
-        User u = em.find(User.class, name);
+        TypedQuery<Profile> query = em.createQuery("SELECT p FROM Profile p WHERE p.user.userName = :userName", Profile.class);
+        query.setParameter("userName", username);
+        User u = em.find(User.class, username);
 
         try{
             em.getTransaction().begin();
             em.remove(u);
             em.getTransaction().commit();
-            u = em.find(User.class, name);
+            u = em.find(User.class, username);
         } finally {
             em.close();
         }

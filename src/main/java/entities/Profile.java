@@ -27,6 +27,7 @@ public class Profile {
     private String name;
 
     @NotNull
+
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -44,6 +45,13 @@ public class Profile {
         }
         this.email = profileDto.getEmail();
         this.name = profileDto.getName();
+        this.user = user;
+    }
+
+    public Profile(Integer id, String email, String name, User user) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
         this.user = user;
     }
 
