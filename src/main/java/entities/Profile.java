@@ -27,7 +27,6 @@ public class Profile {
     private String name;
 
     @NotNull
-
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

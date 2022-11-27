@@ -20,8 +20,8 @@ public class ProfileFacadeTest {
     private static ProfileFacade profileFacade;
 
     User u1, u2;
-
     Profile p1;
+
 
     public ProfileFacadeTest() {
     }
@@ -38,7 +38,7 @@ public class ProfileFacadeTest {
 
         u1 = new User("John", "123");
         u2 = new User("Bertha", "prop");
-        p1 = new Profile(1,"a@a.dk", "name",  u1);
+        p1 = new Profile(1,"a@a.dk", "name", u1);
 
         try {
             em.getTransaction().begin();
@@ -56,6 +56,7 @@ public class ProfileFacadeTest {
     @Test
     void createProfileTest()
     {
+
         ProfileDto newProfile = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
         ProfileDto result = profileFacade.createProfile(newProfile);
 

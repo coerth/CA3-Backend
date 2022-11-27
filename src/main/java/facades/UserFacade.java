@@ -2,9 +2,6 @@ package facades;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
-
-import entities.Profile;
 import entities.User;
 import security.errorhandling.AuthenticationException;
 

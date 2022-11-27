@@ -51,7 +51,6 @@ public class ProfileFacade
         try{
             em.getTransaction().begin();
             em.remove(profile);
-            //em.remove(u);
             em.getTransaction().commit();
             u = em.find(User.class, profile.getUser().getId());
         } finally {
@@ -64,5 +63,4 @@ public class ProfileFacade
         }
         return false;
     }
-
 }

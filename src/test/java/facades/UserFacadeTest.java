@@ -36,6 +36,7 @@ public class UserFacadeTest {
 
         u1 = new User("John", "123");
         u2 = new User("Bertha", "prop");
+
         try {
             em.getTransaction().begin();
             em.createNamedQuery("User.deleteAllRows").executeUpdate();

@@ -120,19 +120,21 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getUserName().equals(user.getUserName());
+        return getId().equals(user.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserName());
+        return Objects.hash(getId());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
+                ", profile=" + profile +
                 '}';
     }
 }

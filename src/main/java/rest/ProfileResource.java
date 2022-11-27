@@ -16,7 +16,6 @@ public class ProfileResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     private static final ProfileFacade FACADE =  ProfileFacade.getInstance(EMF);
-
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
