@@ -53,6 +53,5 @@ public class ProfileResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteProfiles(@PathParam("username") String username){
         return Response.ok().entity(GSON.toJson(USERFACADE.deleteUser(username))).build();
-
     }
 }

@@ -59,6 +59,7 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User u = em.find(User.class, name);
 
+
         try{
             em.getTransaction().begin();
             em.remove(u);
