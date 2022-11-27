@@ -27,8 +27,9 @@ public class Profile {
     private String name;
 
     @NotNull
-    @OneToOne(mappedBy = "profile")
-    private User userName;
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "profile")
     private Set<Journey> journeys = new LinkedHashSet<>();
@@ -43,7 +44,7 @@ public class Profile {
         }
         this.email = profileDto.getEmail();
         this.name = profileDto.getName();
-        this.userName = user;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -70,12 +71,12 @@ public class Profile {
         this.name = name;
     }
 
-    public entities.User getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(entities.User userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Journey> getJourneys() {
@@ -86,12 +87,4 @@ public class Profile {
         this.journeys = journeys;
     }
 
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                "," + userName;
-    }
 }

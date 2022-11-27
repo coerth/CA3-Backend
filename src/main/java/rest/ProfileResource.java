@@ -3,17 +3,12 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.ProfileDto;
-import entities.User;
 import facades.ProfileFacade;
 import utils.EMF_Creator;
 
-import javax.annotation.security.RolesAllowed;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.util.List;
 
 @Path("profile")
 public class ProfileResource {
@@ -34,7 +29,7 @@ public class ProfileResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProfile(String content) throws Exception {
         ProfileDto profileDtoFromJSON = GSON.fromJson(content, ProfileDto.class);
-
+        System.out.println(profileDtoFromJSON);
          ProfileDto profileDto = FACADE.createProfile(profileDtoFromJSON);
 
          return Response.ok().entity(GSON.toJson(profileDto)).build();

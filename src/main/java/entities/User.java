@@ -1,50 +1,42 @@
 package entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import dtos.ProfileDto;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @NamedQuery(name="User.deleteAllRows",query = "DELETE from User")
-@Table(name = "users")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Table(name = "user")
+public class User {
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @Size(max = 25)
     @NotNull
-    @Column(name = "user_name", length = 25)
+    @Column(name = "user_name", nullable = false, length = 25)
     private String userName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+
+    @Size(max = 255)
     @Column(name = "user_pass")
     private String userPass;
-    @JoinTable(name = "user_roles", joinColumns = {
-            @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
-            @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
-    @ManyToMany
-    private List<Role> roleList = new ArrayList<>();
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @PrimaryKeyJoinColumn(name = "user_name", referencedColumnName = "user_name")
+
+    @OneToOne(mappedBy = "user")
     private Profile profile;
 
-    public List<String> getRolesAsStrings() {
-        if (roleList.isEmpty()) {
-            return null;
-        }
-        List<String> rolesAsStrings = new ArrayList<>();
-        roleList.forEach((role) -> {
-            rolesAsStrings.add(role.getRoleName());
-        });
-        return rolesAsStrings;
-    }
+    @ManyToMany
+    @JoinTable(name = "user_has_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new LinkedHashSet<>();
 
     public User() {
     }
@@ -72,13 +64,27 @@ public class User implements Serializable {
         return BCrypt.checkpw(pw, userPass);
     }
 
-
-    public Profile getProfile() {
-        return profile;
+    public void addRole(Role userRole) {
+        roles.add(userRole);
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public List<String> getRolesAsStrings() {
+        if (roles.isEmpty()) {
+            return null;
+        }
+        List<String> rolesAsStrings = new ArrayList<>();
+        roles.forEach((role) -> {
+            rolesAsStrings.add(role.getRoleName());
+        });
+        return rolesAsStrings;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -90,29 +96,27 @@ public class User implements Serializable {
     }
 
     public String getUserPass() {
-        return this.userPass;
+        return userPass;
     }
 
     public void setUserPass(String userPass) {
         this.userPass = userPass;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
-    public void addRole(Role userRole) {
-        roleList.add(userRole);
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    @Override
-    public String toString() {
-        return  "userName='" + userName + '\'' +
-                ", userPass='" + userPass + '\'' +
-                '}';
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
+
 }

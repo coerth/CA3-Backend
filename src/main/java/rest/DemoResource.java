@@ -1,7 +1,5 @@
 package rest;
 
-import com.google.gson.Gson;
-import entities.User;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
@@ -14,6 +12,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
+
+import entities.User;
 import utils.EMF_Creator;
 
 /**

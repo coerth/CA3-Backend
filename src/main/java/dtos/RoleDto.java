@@ -6,45 +6,45 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link entities.JourneyType} entity
+ * A DTO for the {@link entities.Role} entity
  */
-public class JourneyTypeDto implements Serializable {
+public class RoleDto implements Serializable {
     private final Integer id;
-    @Size(max = 45)
+    @Size(max = 20)
     @NotNull
-    private final String name;
+    private final String roleName;
 
-    public JourneyTypeDto(Integer id, String name) {
+    public RoleDto(Integer id, String roleName) {
         this.id = id;
-        this.name = name;
+        this.roleName = roleName;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        JourneyTypeDto entity = (JourneyTypeDto) o;
+        RoleDto entity = (RoleDto) o;
         return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.name, entity.name);
+                Objects.equals(this.roleName, entity.roleName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, roleName);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
-                "name = " + name + ")";
+                "roleName = " + roleName + ")";
     }
 }

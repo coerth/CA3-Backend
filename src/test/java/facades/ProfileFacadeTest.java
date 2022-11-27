@@ -2,14 +2,10 @@ package facades;
 
 
 import dtos.ProfileDto;
-import dtos.UserDTO;
-import entities.Profile;
 import entities.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mindrot.jbcrypt.BCrypt;
-import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
@@ -54,7 +50,7 @@ public class ProfileFacadeTest {
     void createProfileTest()
     {
 
-        ProfileDto newProfile = new ProfileDto("morten@koksikoden.dk", "morten", "Morten","spyflue");
+        ProfileDto newProfile = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
         ProfileDto result = ProfileFacade.createProfile(newProfile);
 
         assertNotNull(result);

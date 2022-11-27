@@ -5,6 +5,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * A DTO for the {@link entities.Fuel} entity
+ */
 public class FuelDto implements Serializable {
     private final Integer id;
     @Size(max = 45)

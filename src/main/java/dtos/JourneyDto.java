@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * A DTO for the {@link entities.Journey} entity
+ */
 public class JourneyDto implements Serializable {
     private final Integer id;
     @Size(max = 45)
@@ -109,15 +112,34 @@ public class JourneyDto implements Serializable {
                 "trips = " + trips + ")";
     }
 
+    /**
+     * A DTO for the {@link entities.Profile} entity
+     */
     public static class ProfileDto implements Serializable {
         private final Integer id;
+        @Size(max = 45)
+        @NotNull
+        private final String email;
+        @Size(max = 45)
+        @NotNull
+        private final String name;
 
-        public ProfileDto(Integer id) {
+        public ProfileDto(Integer id, String email, String name) {
             this.id = id;
+            this.email = email;
+            this.name = name;
         }
 
         public Integer getId() {
             return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getName() {
+            return name;
         }
 
         @Override
@@ -125,21 +147,28 @@ public class JourneyDto implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ProfileDto entity = (ProfileDto) o;
-            return Objects.equals(this.id, entity.id);
+            return Objects.equals(this.id, entity.id) &&
+                    Objects.equals(this.email, entity.email) &&
+                    Objects.equals(this.name, entity.name);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id);
+            return Objects.hash(id, email, name);
         }
 
         @Override
         public String toString() {
             return getClass().getSimpleName() + "(" +
-                    "id = " + id + ")";
+                    "id = " + id + ", " +
+                    "email = " + email + ", " +
+                    "name = " + name + ")";
         }
     }
 
+    /**
+     * A DTO for the {@link entities.JourneyType} entity
+     */
     public static class JourneyTypeDto implements Serializable {
         private final Integer id;
         @Size(max = 45)
@@ -181,6 +210,9 @@ public class JourneyDto implements Serializable {
         }
     }
 
+    /**
+     * A DTO for the {@link entities.Trip} entity
+     */
     public static class TripDto implements Serializable {
         private final Integer id;
         @NotNull
@@ -190,11 +222,11 @@ public class JourneyDto implements Serializable {
         @NotNull
         private final Float cost;
         @NotNull
-        private final FuelDto fuel;
+        private final FuelDto1 fuel;
         @NotNull
         private final TransportationDto transportation;
 
-        public TripDto(Integer id, Float distance, Float emission, Float cost, FuelDto fuel, TransportationDto transportation) {
+        public TripDto(Integer id, Float distance, Float emission, Float cost, FuelDto1 fuel, TransportationDto transportation) {
             this.id = id;
             this.distance = distance;
             this.emission = emission;
@@ -219,7 +251,7 @@ public class JourneyDto implements Serializable {
             return cost;
         }
 
-        public FuelDto getFuel() {
+        public FuelDto1 getFuel() {
             return fuel;
         }
 
@@ -256,13 +288,16 @@ public class JourneyDto implements Serializable {
                     "transportation = " + transportation + ")";
         }
 
-        public static class FuelDto implements Serializable {
+        /**
+         * A DTO for the {@link entities.Fuel} entity
+         */
+        public static class FuelDto1 implements Serializable {
             private final Integer id;
             @Size(max = 45)
             @NotNull
             private final String name;
 
-            public FuelDto(Integer id, String name) {
+            public FuelDto1(Integer id, String name) {
                 this.id = id;
                 this.name = name;
             }
@@ -279,7 +314,7 @@ public class JourneyDto implements Serializable {
             public boolean equals(Object o) {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
-                FuelDto entity = (FuelDto) o;
+                FuelDto1 entity = (FuelDto1) o;
                 return Objects.equals(this.id, entity.id) &&
                         Objects.equals(this.name, entity.name);
             }
@@ -297,6 +332,9 @@ public class JourneyDto implements Serializable {
             }
         }
 
+        /**
+         * A DTO for the {@link entities.Transportation} entity
+         */
         public static class TransportationDto implements Serializable {
             private final Integer id;
             @Size(max = 45)

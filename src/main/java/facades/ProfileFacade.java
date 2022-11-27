@@ -27,7 +27,7 @@ public class ProfileFacade
     {
 
         EntityManager em = emf.createEntityManager();
-        User user = new User(profileDto.getUserDto());
+        User user = new User(profileDto.getUser());
         Profile profile = new Profile(profileDto, user);
 
         try {

@@ -2,16 +2,13 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.ProfileDto;
-import entities.User;
-import entities.Role;
 
+import dtos.ProfileDto;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -117,7 +114,8 @@ public class ProfileResourceTest {
 
     @Test
     public void create() {
-        ProfileDto profileDto = new ProfileDto("morten@koksikoden.dk", "morten", "Morten","spyflue");
+        ProfileDto profileDto = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
+
 
         String requestBody = GSON.toJson(profileDto);
         System.out.println(requestBody);

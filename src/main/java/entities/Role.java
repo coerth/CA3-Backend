@@ -1,41 +1,43 @@
 package entities;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-/**
- *
- * @author Plaul
- */
 @Entity
-@Table(name = "roles")
-public class Role implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Table(name = "role")
+public class Role {
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
+
+    @Size(max = 20)
     @NotNull
-    @Column(name = "role_name", length = 20)
+    @Column(name = "role_name", nullable = false, length = 20)
     private String roleName;
-    
-    @ManyToMany(mappedBy = "roleList")
-    private List<User> userList;
+
+    @ManyToMany
+    @JoinTable(name = "user_has_role",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users = new LinkedHashSet<>();
 
     public Role() {
     }
 
     public Role(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getRoleName() {
@@ -46,11 +48,12 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }   
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
 }

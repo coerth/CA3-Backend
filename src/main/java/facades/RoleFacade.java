@@ -1,8 +1,5 @@
 package facades;
 
-import entities.Role;
-
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class RoleFacade {
