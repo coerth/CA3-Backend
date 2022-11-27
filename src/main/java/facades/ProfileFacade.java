@@ -43,4 +43,26 @@ public class ProfileFacade
         return new ProfileDto(profile);
     }
 
+    public Boolean deleteProfile(int id){
+        EntityManager em = emf.createEntityManager();
+        Profile profile = em.find(Profile.class, id);
+        User u;
+
+        try{
+            em.getTransaction().begin();
+            em.remove(profile);
+            //em.remove(u);
+            em.getTransaction().commit();
+            u = em.find(User.class, profile.getUser().getId());
+        } finally {
+            em.close();
+        }
+
+        if(u == null)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -57,26 +57,4 @@ public class UserFacade {
         return user;
     }
 
-
-    public Boolean deleteUser(String username){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Profile> query = em.createQuery("SELECT p FROM Profile p WHERE p.user.userName = :userName", Profile.class);
-        query.setParameter("userName", username);
-        User u = em.find(User.class, username);
-
-        try{
-            em.getTransaction().begin();
-            em.remove(u);
-            em.getTransaction().commit();
-            u = em.find(User.class, username);
-        } finally {
-            em.close();
-        }
-
-        if(u == null)
-        {
-            return true;
-        }
-        return false;
-    }
 }

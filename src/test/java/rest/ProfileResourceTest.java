@@ -2,20 +2,15 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-<<<<<<< HEAD
-=======
 import dtos.ProfileDto;
 import entities.Profile;
 import entities.User;
-import entities.Role;
->>>>>>> 551e1d3 (delete rest test passed)
-
-import dtos.ProfileDto;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -160,7 +155,7 @@ public class ProfileResourceTest {
     public void delete(){
         given()
                 .contentType(ContentType.JSON)
-                .delete("/profile/"+ u1.getUserName())
+                .delete("/profile/"+ u1.getId())
                 .then()
                 .statusCode(200)
                 .extract().response().as(Boolean.class);

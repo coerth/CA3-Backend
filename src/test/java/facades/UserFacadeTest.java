@@ -21,8 +21,6 @@ public class UserFacadeTest {
 
     User u1, u2;
 
-    Profile p1;
-
     public UserFacadeTest() {
     }
 
@@ -38,14 +36,11 @@ public class UserFacadeTest {
 
         u1 = new User("John", "123");
         u2 = new User("Bertha", "prop");
-        p1 = new Profile(1,"a@a.dk", "name",  u1);
-
         try {
             em.getTransaction().begin();
             em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(u1);
             em.persist(u2);
-            em.persist(p1);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -71,12 +66,4 @@ public class UserFacadeTest {
 
         assertNotNull(result);
     }
-
-    @Test
-    void deleteUsertest() {
-        boolean response = userFacade.deleteUser(u1.getUserName());
-        assertEquals(true, response);
-
-    }
-
 }

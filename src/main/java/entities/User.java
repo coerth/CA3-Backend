@@ -45,7 +45,6 @@ public class User {
     public User(ProfileDto.UserDto userDto) {
         this.userName = userDto.getUserName();
         this.userPass = BCrypt.hashpw(userDto.getUserPass(), BCrypt.gensalt());
-
     }
 
     public User(String userName, String userPass, Profile profile) {
