@@ -51,11 +51,8 @@ public class ProfileFacadeTest {
     @Test
     void createProfileTest()
     {
-
-
         ProfileDto newProfile = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
         ProfileDto result = profileFacade.createProfile(newProfile);
-
 
         assertNotNull(result);
         assertEquals(newProfile.getName(), result.getName());
