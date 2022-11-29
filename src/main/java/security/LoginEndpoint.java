@@ -12,8 +12,6 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import dtos.ProfileDto;
-import entities.Profile;
-import entities.User;
 import facades.ProfileFacade;
 import facades.UserFacade;
 import java.util.Date;
@@ -23,7 +21,6 @@ import java.util.logging.Logger;
 
 import errorhandling.API_Exception;
 
-import javax.json.JsonWriter;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -62,7 +59,6 @@ public class LoginEndpoint {
         try {
             ProfileDto profileDto = PROFILE_FACADE.getVeryfiedProfile(username, password);
             String token = createToken(username, profileDto.getUser().getRolesAsStrings());
-
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("username", username);
             responseJson.addProperty("token", token);
