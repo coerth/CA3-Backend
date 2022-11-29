@@ -50,4 +50,11 @@ public class ProfileResource {
     public Response deleteProfiles(@PathParam("id") int id){
         return Response.ok().entity(GSON.toJson(FACADE.deleteProfile(id))).build();
     }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProfileById(@PathParam("id") int id){
+        return Response.ok().entity(GSON.toJson(FACADE.getProfileById(id))).build();
+    }
 }

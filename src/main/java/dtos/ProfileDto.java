@@ -21,7 +21,7 @@ public class ProfileDto implements Serializable {
     private String name;
     @NotNull
     private UserDto user;
-    private Set<JourneyDto> journeys;
+    private Set<JourneyDto> journeys = new LinkedHashSet<>();
 
     public ProfileDto(Integer id, String email, String name, UserDto user, Set<JourneyDto> journeys) {
         this.id = id;
@@ -42,6 +42,11 @@ public class ProfileDto implements Serializable {
         this.email = profile.getEmail();
         this.name = profile.getName();
         this.user = new UserDto(profile.getUser());
+        if(profile.getJourneys() != null){
+            for (Journey journey : profile.getJourneys()){
+                this.journeys.add(new JourneyDto(journey));
+            }
+        }
     }
 
     public Integer getId() {
@@ -242,7 +247,7 @@ public class ProfileDto implements Serializable {
         private Float totalCost;
         @NotNull
         private JourneyTypeDto journeyType;
-        private Set<TripDto> trips;
+        private Set<TripDto> trips = new LinkedHashSet<>();
 
         public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType, Set<TripDto> trips) {
             this.id = id;
@@ -253,6 +258,21 @@ public class ProfileDto implements Serializable {
             this.totalCost = totalCost;
             this.journeyType = journeyType;
             this.trips = trips;
+        }
+
+        public JourneyDto(Journey journey){
+            this.id = journey.getId();
+            this.name = journey.getName();
+            this.date = journey.getDate().toString();
+            this.totalEmission = journey.getTotalEmission();
+            this.totalDistance = journey.getTotalDistance();
+            this.totalCost = journey.getTotalCost();
+            this.journeyType = new JourneyTypeDto(journey.getJourneyType().getId(), journey.getJourneyType().getName());
+            if(journey.getTrips() != null){
+                for(Trip trip : journey.getTrips()){
+                    this.trips.add(new TripDto(trip));
+                }
+            }
         }
 
         public JourneyDto() {
@@ -390,6 +410,15 @@ public class ProfileDto implements Serializable {
                 this.cost = cost;
                 this.fuel = fuel;
                 this.transportation = transportation;
+            }
+
+            public TripDto(Trip trip){
+                this.id = trip.getId();
+                this.distance = trip.getDistance();
+                this.emission = trip.getEmission();
+                this.cost = trip.getCost();
+                this.fuel = new FuelDto(trip.getFuel().getId(), trip.getFuel().getName());
+                this.transportation = new TransportationDto(trip.getTransportation().getId(), trip.getTransportation().getName());
             }
 
             public Integer getId() {
