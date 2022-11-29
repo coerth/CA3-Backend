@@ -81,4 +81,14 @@ public class ProfileFacade
         }
         return false;
     }
+
+    public ProfileDto getProfileById(int id)
+    {
+        EntityManager em = emf.createEntityManager();
+        ProfileDto profileDto = null;
+
+        profileDto = em.find(ProfileDto.class, id);
+
+        return profileDto;
+    }
 }

@@ -1,6 +1,7 @@
 package security;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nimbusds.jose.JOSEException;
@@ -21,6 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import errorhandling.API_Exception;
+
+import javax.json.JsonWriter;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,6 +41,7 @@ public class LoginEndpoint {
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static final ProfileFacade PROFILE_FACADE = ProfileFacade.getInstance(EMF);
 
@@ -58,12 +62,13 @@ public class LoginEndpoint {
         try {
             ProfileDto profileDto = PROFILE_FACADE.getVeryfiedProfile(username, password);
             String token = createToken(username, profileDto.getUser().getRolesAsStrings());
+
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("username", username);
             responseJson.addProperty("token", token);
-            responseJson.addProperty("profile", profileDto.getId());
-            System.out.println(new Gson().toJson(responseJson));
-            return Response.ok(new Gson().toJson(responseJson)).build();
+            responseJson.add("profile", GSON.toJsonTree(profileDto));
+            System.out.println(GSON.toJson(responseJson));
+            return Response.ok(GSON.toJson(responseJson)).build();
 
         } catch (JOSEException | AuthenticationException ex) {
             if (ex instanceof AuthenticationException) {
