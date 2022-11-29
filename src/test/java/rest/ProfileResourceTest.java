@@ -3,16 +3,19 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.ProfileDto;
-import entities.Profile;
-import entities.User;
+import entities.*;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
+
+import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -37,8 +40,14 @@ public class ProfileResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
 
     User u1, u2;
-
     Profile p1;
+    Journey j1;
+    Journey j2;
+    JourneyType jt1;
+    Trip trip1;
+    Transportation transportation1;
+    Fuel f1;
+
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
 
@@ -77,13 +86,30 @@ public class ProfileResourceTest {
 
         u1 = new User("John", "123");
         u2 = new User("Bertha", "prop");
+        f1 = new Fuel("Rugbrødsmotor");
+        transportation1 = new Transportation("Løb");
+        jt1 = new JourneyType("Recurring");
+        j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
+       // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
+        LinkedHashSet journeys = new LinkedHashSet<Journey>();
+        journeys.add(j1);
+       // journeys.add(j2);
+        trip1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
+
         p1 = new Profile(1,"a@a.dk", "name",  u1);
+        j1.setProfile(p1);
+        p1.setJourneys(journeys);
 
         try{
             em.getTransaction().begin();
             em.persist(u1);
             em.persist(u2);
             em.persist(p1);
+            em.persist(f1);
+            em.persist(jt1);
+            em.persist(transportation1);
+            em.persist(trip1);
+            em.persist(j1);
             em.getTransaction().commit();
         }finally {
             em.close();
@@ -109,6 +135,16 @@ public class ProfileResourceTest {
         given()
                 .when().get("/profile")
                 .then().log().body().statusCode(200);
+    }
+
+    @Test
+    public void getProfileById() {
+        given()
+                .contentType(ContentType.JSON)
+                .get("/profile/{id}", p1.getId())
+                .then()
+                .assertThat()
+                .body("id", equalTo(p1.getId()));
     }
 
     @Test

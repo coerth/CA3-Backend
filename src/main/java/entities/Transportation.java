@@ -32,6 +32,10 @@ public class Transportation {
         this.name = transportationDto.getName();
     }
 
+    public Transportation(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

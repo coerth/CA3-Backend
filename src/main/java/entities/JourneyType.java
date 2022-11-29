@@ -32,6 +32,10 @@ public class JourneyType {
         this.name = journeyTypeDto.getName();
     }
 
+    public JourneyType(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

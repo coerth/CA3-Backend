@@ -52,6 +52,15 @@ public class Trip {
         this.transportation = new Transportation(tripDto.getTransportation());
     }
 
+    public Trip(Float distance, Float emission, Float cost, Journey journey, Fuel fuel, Transportation transportation) {
+        this.distance = distance;
+        this.emission = emission;
+        this.cost = cost;
+        this.journey = journey;
+        this.fuel = fuel;
+        this.transportation = transportation;
+    }
+
     public Integer getId() {
         return id;
     }

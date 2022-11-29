@@ -32,6 +32,10 @@ public class Fuel {
         this.name = fuelDto.getName();
     }
 
+    public Fuel(String name) {
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

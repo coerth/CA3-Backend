@@ -85,11 +85,9 @@ public class ProfileFacade
     public ProfileDto getProfileById(int id)
     {
         EntityManager em = emf.createEntityManager();
-        ProfileDto profileDto = null;
+        Profile p = em.find(Profile.class, id);
 
-        profileDto = em.find(ProfileDto.class, id);
-
-        return profileDto;
+        return new ProfileDto(p);
     }
 
     public ProfileDto updateProfile(ProfileDto profileDto){
