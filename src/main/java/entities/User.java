@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import dtos.ProfileDto;
+import dtos.UserDto;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.LinkedHashSet;
@@ -46,6 +47,11 @@ public class User {
     public User(ProfileDto.UserDto userDto) {
         this.userName = userDto.getUserName();
         this.userPass = BCrypt.hashpw(userDto.getUserPass(), BCrypt.gensalt());
+        if(userDto.getRoles() != null){
+            for(ProfileDto.UserDto.RoleDto roleDto : userDto.getRoles()){
+                this.roles.add(new Role(roleDto));
+            }
+        }
     }
 
     public User(String userName, String userPass, Profile profile) {

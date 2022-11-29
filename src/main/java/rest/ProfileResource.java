@@ -57,4 +57,15 @@ public class ProfileResource {
     public Response getProfileById(@PathParam("id") int id){
         return Response.ok().entity(GSON.toJson(FACADE.getProfileById(id))).build();
     }
+
+    @PUT
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProfile(@PathParam("id") String content) throws Exception {
+        ProfileDto profileDtoFromJSON = GSON.fromJson(content, ProfileDto.class);
+        ProfileDto profileDto = FACADE.updateProfile(profileDtoFromJSON);
+
+        return Response.ok().entity(GSON.toJson(profileDto)).build();
+    }
 }

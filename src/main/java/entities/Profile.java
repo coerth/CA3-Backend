@@ -47,6 +47,18 @@ public class Profile {
         this.user = user;
     }
 
+    public Profile(ProfileDto profileDto){
+        this.id = profileDto.getId();
+        this.email = profileDto.getEmail();
+        this.name = profileDto.getName();
+        this.user = new User(profileDto.getUser());
+        if(profileDto.getJourneys() != null){
+            for(ProfileDto.JourneyDto journeyDto : profileDto.getJourneys()){
+                this.journeys.add(new Journey(journeyDto));
+            }
+        }
+    }
+
     public Profile(Integer id, String email, String name, User user) {
         this.id = id;
         this.email = email;

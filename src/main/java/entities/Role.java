@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +28,11 @@ public class Role {
     private Set<User> users = new LinkedHashSet<>();
 
     public Role() {
+    }
+
+    public Role(ProfileDto.UserDto.RoleDto roleDto) {
+        this.id = roleDto.getId();
+        this.roleName = roleDto.getRoleName();
     }
 
     public Role(String roleName) {

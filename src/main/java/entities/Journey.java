@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -48,6 +50,24 @@ public class Journey {
 
     @OneToMany(mappedBy = "journey")
     private Set<Trip> trips = new LinkedHashSet<>();
+
+    public Journey() {
+    }
+
+    public Journey(ProfileDto.JourneyDto journeyDto) {
+        this.id = journeyDto.getId();
+        this.name = journeyDto.getName();
+        this.date = LocalDate.parse(journeyDto.getDate());
+        this.totalEmission = journeyDto.getTotalEmission();
+        this.totalDistance = journeyDto.getTotalDistance();
+        this.totalCost = journeyDto.getTotalCost();
+        this.journeyType = new JourneyType(journeyDto.getJourneyType());
+        if(journeyDto.getTrips() != null){
+            for(ProfileDto.JourneyDto.TripDto tripDto : journeyDto.getTrips()){
+                this.trips.add(new Trip(tripDto));
+            }
+        }
+    }
 
     public Integer getId() {
         return id;

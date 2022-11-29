@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -37,6 +39,18 @@ public class Trip {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "transportation_id", nullable = false)
     private Transportation transportation;
+
+    public Trip() {
+    }
+
+    public Trip(ProfileDto.JourneyDto.TripDto tripDto) {
+        this.id = tripDto.getId();
+        this.distance = tripDto.getDistance();
+        this.emission = tripDto.getEmission();
+        this.cost = tripDto.getCost();
+        this.fuel = new Fuel(tripDto.getFuel());
+        this.transportation = new Transportation(tripDto.getTransportation());
+    }
 
     public Integer getId() {
         return id;

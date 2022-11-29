@@ -92,5 +92,17 @@ public class ProfileFacade
         return profileDto;
     }
 
-    public ProfileDto
+    public ProfileDto updateProfile(ProfileDto profileDto){
+        EntityManager em = emf.createEntityManager();
+        Profile profile = new Profile(profileDto);
+
+        try{
+            em.getTransaction().begin();
+            em.merge(profile);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new ProfileDto(profile);
+    }
 }

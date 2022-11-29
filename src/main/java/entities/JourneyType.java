@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,6 +23,14 @@ public class JourneyType {
 
     @OneToMany(mappedBy = "journeyType")
     private Set<Journey> journeys = new LinkedHashSet<>();
+
+    public JourneyType() {
+    }
+
+    public JourneyType(ProfileDto.JourneyDto.JourneyTypeDto journeyTypeDto) {
+        this.id = journeyTypeDto.getId();
+        this.name = journeyTypeDto.getName();
+    }
 
     public Integer getId() {
         return id;
