@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(security.errorhandling.NotAuthorizedExceptionMapper.class);
         resources.add(ProfileResource.class);
         resources.add(TransportationTypeResource.class);
+        resources.add(FuelResource.class);
     }
     
 }
