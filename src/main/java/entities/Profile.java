@@ -31,7 +31,7 @@ public class Profile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Set<Journey> journeys = new LinkedHashSet<>();
 
     public Profile() {
