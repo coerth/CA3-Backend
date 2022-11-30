@@ -58,6 +58,7 @@ public class JourneyDto implements Serializable {
     }
 
     public JourneyDto(Journey journey) {
+        this.id = journey.getId();
         this.name = journey.getName();
         this.date = journey.getDate();
         this.totalEmission = journey.getTotalEmission();

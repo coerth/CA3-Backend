@@ -45,7 +45,7 @@ public class Journey {
     private Profile profile;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "journey_type_id", nullable = false)
     private JourneyType journeyType;
 
@@ -89,6 +89,20 @@ public class Journey {
         this.journeyType = new JourneyType(journeyDto.getJourneyType());
     }
 
+    @Override
+    public String toString() {
+        return "Journey{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", totalEmission=" + totalEmission +
+                ", totalDistance=" + totalDistance +
+                ", totalCost=" + totalCost +
+                ", profile=" + profile +
+                ", journeyType=" + journeyType +
+                ", trips=" + trips +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -161,5 +175,7 @@ public class Journey {
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
     }
+
+
 
 }

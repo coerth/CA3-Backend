@@ -28,15 +28,17 @@ public class JourneyFacade {
 
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
         Journey journey = new Journey(journeyDto);
-        profile.getJourneys().add(journey);
+        journey.setProfile(profile);
+
         try {
             em.getTransaction().begin();
-            em.merge(profile);
+            em.persist(journey);
             em.getTransaction().commit();
         }
         finally {
             em.close();
         }
+
         return new JourneyDto(journey);
     }
 

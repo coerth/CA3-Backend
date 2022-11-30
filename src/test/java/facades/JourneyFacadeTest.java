@@ -83,6 +83,8 @@ public class JourneyFacadeTest {
         JourneyDto newJourney = new JourneyDto("Til træning",LocalDate.of(2022,11,10), 20.5F, 0.2F, 90F, journeyProfileDto,journeyJourneyTypeDto, trips);
         JourneyDto result = journeyFacade.createJourney(newJourney);
 
+        System.out.println(result);
+
         assertNotNull(result.getId());
         assertEquals(newJourney.getName(), result.getName());
     }
