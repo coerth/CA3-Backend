@@ -1,22 +1,37 @@
 package dtos;
 
+import entities.Transportation;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link entities.Transportation} entity
  */
 public class TransportationDto implements Serializable {
-    private final Integer id;
+    private Integer id;
     @Size(max = 45)
     @NotNull
-    private final String name;
+    private String name;
 
     public TransportationDto(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public TransportationDto(Transportation transportation){
+        this.id = transportation.getId();
+        this.name = transportation.getName();
+    }
+
+    public static List<TransportationDto> getDtos(List<Transportation> transportationList) {
+        List<TransportationDto> transportationDtos = new ArrayList();
+        transportationList.forEach(transportation -> transportationDtos.add(new dtos.TransportationDto(transportation)));
+        return transportationDtos;
     }
 
     public Integer getId() {
