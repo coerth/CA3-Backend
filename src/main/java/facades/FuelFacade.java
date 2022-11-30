@@ -13,8 +13,6 @@ public class FuelFacade {
     private static EntityManagerFactory emf;
     private static FuelFacade instance;
 
-    UserFacade userFacade = UserFacade.getUserFacade(emf);
-
     public FuelFacade() {
     }
 

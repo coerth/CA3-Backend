@@ -1,6 +1,5 @@
 package facades;
 
-import dtos.ProfileDto;
 import dtos.TransportationDto;
 import entities.Transportation;
 
