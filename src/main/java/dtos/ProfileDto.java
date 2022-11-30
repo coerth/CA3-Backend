@@ -247,9 +247,11 @@ public class ProfileDto implements Serializable {
         private Float totalCost;
         @NotNull
         private JourneyTypeDto journeyType;
+
+        private Profile profile;
         private Set<TripDto> trips = new LinkedHashSet<>();
 
-        public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType, Set<TripDto> trips) {
+        public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
             this.id = id;
             this.name = name;
             this.date = date.toString();
@@ -257,7 +259,7 @@ public class ProfileDto implements Serializable {
             this.totalDistance = totalDistance;
             this.totalCost = totalCost;
             this.journeyType = journeyType;
-            this.trips = trips;
+
         }
 
         public JourneyDto(Journey journey){
@@ -267,6 +269,7 @@ public class ProfileDto implements Serializable {
             this.totalEmission = journey.getTotalEmission();
             this.totalDistance = journey.getTotalDistance();
             this.totalCost = journey.getTotalCost();
+            this.profile = journey.getProfile();
             this.journeyType = new JourneyTypeDto(journey.getJourneyType().getId(), journey.getJourneyType().getName());
             if(journey.getTrips() != null){
                 for(Trip trip : journey.getTrips()){
@@ -277,6 +280,13 @@ public class ProfileDto implements Serializable {
 
         public JourneyDto() {
         }
+
+        public static List<ProfileDto.JourneyDto> getDtos(List<Journey> journeyList) {
+            List<ProfileDto.JourneyDto> journeyDtos = new ArrayList();
+            journeyList.forEach(journey -> journeyDtos.add(new ProfileDto.JourneyDto(journey)));
+            return journeyDtos;
+        }
+
 
         public Integer getId() {
             return id;
@@ -332,15 +342,17 @@ public class ProfileDto implements Serializable {
 
         @Override
         public String toString() {
-            return getClass().getSimpleName() + "(" +
-                    "id = " + id + ", " +
-                    "name = " + name + ", " +
-                    "date = " + date + ", " +
-                    "totalEmission = " + totalEmission + ", " +
-                    "totalDistance = " + totalDistance + ", " +
-                    "totalCost = " + totalCost + ", " +
-                    "journeyType = " + journeyType + ", " +
-                    "trips = " + trips + ")";
+            return "JourneyDto{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", date='" + date + '\'' +
+                    ", totalEmission=" + totalEmission +
+                    ", totalDistance=" + totalDistance +
+                    ", totalCost=" + totalCost +
+                    ", journeyType=" + journeyType +
+                    ", profile=" + profile +
+                    ", trips=" + trips +
+                    '}';
         }
 
         /**

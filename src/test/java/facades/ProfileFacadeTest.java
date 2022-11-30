@@ -1,9 +1,9 @@
 package facades;
 
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
-import entities.Profile;
-import entities.User;
+import entities.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,10 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +25,10 @@ public class ProfileFacadeTest {
 
     User u1, u2;
     Profile p1;
+
+    Journey j1, j2, j3;
+
+    JourneyType jt1;
 
 
     public ProfileFacadeTest() {
@@ -39,6 +47,21 @@ public class ProfileFacadeTest {
         u1 = new User("John", "123");
         u2 = new User("Bertha", "prop");
         p1 = new Profile(1,"a@a.dk", "name", u1);
+        jt1 = new JourneyType("recourring");
+        j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
+        j2 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
+        j3 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
+
+        LinkedHashSet journeys = new LinkedHashSet<Journey>();
+        journeys.add(j1);
+        journeys.add(j2);
+        journeys.add(j3);
+
+        p1 = new Profile(1,"a@a.dk", "name",  u1);
+        j1.setProfile(p1);
+        j2.setProfile(p1);
+        j3.setProfile(p1);
+        p1.setJourneys(journeys);
 
         try {
             em.getTransaction().begin();
@@ -46,6 +69,10 @@ public class ProfileFacadeTest {
             em.persist(u1);
             em.persist(u2);
             em.persist(p1);
+            em.persist(jt1);
+            em.persist(j1);
+            em.persist(j2);
+            em.persist(j3);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -68,6 +95,23 @@ public class ProfileFacadeTest {
     void deleteUsertest() {
         boolean response = profileFacade.deleteProfile(p1.getId());
         assertEquals(true, response);
+    }
+
+    @Test
+    void getById() {
+        ProfileDto.JourneyDto expected = new ProfileDto.JourneyDto(j1);
+        ProfileDto.JourneyDto actual = profileFacade.getJourneyById(j1.getProfile().getId());
+        assertEquals(expected, actual);
+        System.out.println(expected);
+    }
+
+    @Test
+    void getAll() {
+        int expected = 3;
+        List<ProfileDto.JourneyDto> journeyDtos = profileFacade.getAllJourneys(p1.getId());
+        assertEquals(expected, journeyDtos.size());
+        System.out.println(expected);
+        System.out.println(p1);
     }
 
 }

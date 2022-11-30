@@ -1,13 +1,18 @@
 package facades;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
+import dtos.TransportationDto;
+import entities.Journey;
 import entities.Profile;
+import entities.Transportation;
 import entities.User;
 import security.errorhandling.AuthenticationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class ProfileFacade
 {
@@ -102,5 +107,20 @@ public class ProfileFacade
             em.close();
         }
         return new ProfileDto(profile);
+    }
+
+    public List<ProfileDto.JourneyDto> getAllJourneys(int id){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Journey> query = em.createQuery("SELECT p.journeys FROM Profile p WHERE p.id = :id", Journey.class);
+        query.setParameter("id", id);
+        List<Journey> journey = query.getResultList();
+        return ProfileDto.JourneyDto.getDtos(journey);
+    }
+
+    public ProfileDto.JourneyDto getJourneyById(int id){
+        EntityManager em = emf.createEntityManager();
+        Journey journey = em.find(Journey.class, id);
+
+        return new ProfileDto.JourneyDto(journey);
     }
 }
