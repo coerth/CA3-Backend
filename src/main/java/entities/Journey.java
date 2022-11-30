@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -79,6 +80,14 @@ public class Journey {
         this.journeyType = journeyType;
     }
 
+    public Journey(JourneyDto journeyDto) {
+        this.name = journeyDto.getName();
+        this.date = journeyDto.getDate();
+        this.totalEmission = journeyDto.getTotalEmission();
+        this.totalDistance = journeyDto.getTotalDistance();
+        this.totalCost = journeyDto.getTotalCost();
+        this.journeyType = new JourneyType(journeyDto.getJourneyType());
+    }
 
 
     public Integer getId() {

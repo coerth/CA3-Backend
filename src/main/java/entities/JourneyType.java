@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -25,6 +26,11 @@ public class JourneyType {
     private Set<Journey> journeys = new LinkedHashSet<>();
 
     public JourneyType() {
+    }
+
+    public JourneyType (JourneyDto.JourneyTypeDto journeyTypeDto) {
+        this.id = journeyTypeDto.getId();
+        this.name = journeyTypeDto.getName();
     }
 
     public JourneyType(ProfileDto.JourneyDto.JourneyTypeDto journeyTypeDto) {

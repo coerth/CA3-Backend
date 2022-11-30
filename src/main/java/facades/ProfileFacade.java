@@ -58,8 +58,6 @@ public class ProfileFacade
         } finally {
             em.close();
         }
-
-        System.out.println(profile);
         return new ProfileDto(profile);
     }
 
