@@ -96,5 +96,21 @@ public class JourneyFacadeTest {
         assertEquals(true, response);
     }
 
+    @Test
+    void updateJourneytest() {
+        JourneyDto newJourney = new JourneyDto("Til håndbold", LocalDate.of(2022, 9,11), 80.1F, 20F,2F,journeyProfileDto,journeyJourneyTypeDto, trips);
+        newJourney.setId(j1.getId());
+        journeyFacade.updateJourney(newJourney);
+        JourneyDto result = journeyFacade.getJourneyById(j1.getId());
+
+        assertEquals(newJourney.getName(), result.getName());
+    }
+
+    @Test
+    void getJourneyById () {
+        JourneyDto result = journeyFacade.getJourneyById(j1.getId());
+
+        assertEquals(j1.getJourneyType(), result.getJourneyType());
+    }
 
 }
