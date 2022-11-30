@@ -75,4 +75,10 @@ public class JourneyFacade {
         }
         return new JourneyDto(journey);
     }
+
+    public JourneyDto getJourneyById(int id) {
+        EntityManager em = emf.createEntityManager();
+        Journey j = em.find(Journey.class, id);
+        return new JourneyDto(j);
+    }
 }

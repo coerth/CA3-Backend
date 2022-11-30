@@ -137,6 +137,10 @@ public class JourneyDto implements Serializable {
                 "trips = " + trips + ")";
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     /**
      * A DTO for the {@link entities.Profile} entity
      */
