@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Link;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -57,6 +58,8 @@ public class JourneyFacadeTest {
         t1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
         LinkedHashSet trips = new LinkedHashSet<JourneyDto.TripDto>();
         trips.add(t1);
+
+
 
         j1.setProfile(p1);
         journeyProfileDto = new JourneyDto.ProfileDto(p1);

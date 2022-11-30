@@ -4,6 +4,7 @@ import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.Journey;
 import entities.Profile;
+import entities.Trip;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -46,8 +47,16 @@ public class JourneyFacade {
         EntityManager em = emf.createEntityManager();
         Journey journey = em.find(Journey.class, id);
 
+        System.out.println(journey);
+
         try {
             em.getTransaction().begin();
+
+            for(Trip trip : journey.getTrips())
+            {
+                em.remove(trip);
+            }
+
             em.remove(journey);
             em.getTransaction().commit();
         }

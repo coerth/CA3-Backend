@@ -49,7 +49,7 @@ public class Journey {
     @JoinColumn(name = "journey_type_id", nullable = false)
     private JourneyType journeyType;
 
-    @OneToMany(mappedBy = "journey", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "journey", orphanRemoval = true, cascade = {CascadeType.ALL})
     private Set<Trip> trips = new LinkedHashSet<>();
 
     public Journey() {

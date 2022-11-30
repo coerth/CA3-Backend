@@ -26,7 +26,7 @@ public class Trip {
     private Float cost;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "journey_id", nullable = false)
     private Journey journey;
 
