@@ -38,10 +38,8 @@ public class FuelFacadeTest {
 
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(f1);
             em.persist(f2);
-
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -58,7 +56,6 @@ public class FuelFacadeTest {
     @Test
     void getFuelById() {
         FuelDto result = fuelFacade.getFuelById(f1.getId());
-
         assertEquals(f1.getName(), result.getName());
 
     }
