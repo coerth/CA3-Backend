@@ -6,13 +6,17 @@ import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
 import io.restassured.RestAssured;
+
 import static io.restassured.RestAssured.given;
+
 import io.restassured.http.ContentType;
 import io.restassured.internal.mapping.Jackson1Mapper;
 import io.restassured.mapper.ObjectMapper;
 import io.restassured.parsing.Parser;
+
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -33,6 +37,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
+
 //Uncomment the line below, to temporarily disable this test
 @Disabled
 
@@ -95,18 +100,18 @@ public class ProfileResourceTest {
         f1 = new Fuel("Rugbrødsmotor");
         transportation1 = new Transportation("Løb");
         jt1 = new JourneyType("Recurring");
-        j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
-       // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
+        j1 = new Journey("Work", LocalDate.of(2022, 11, 10), 200F, 20F, 2F, jt1);
+        // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
         LinkedHashSet journeys = new LinkedHashSet<Journey>();
         journeys.add(j1);
-       // journeys.add(j2);
-        trip1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
+        // journeys.add(j2);
+        trip1 = new Trip(22.5F, 2600F, 0F, j1, f1, transportation1);
 
-        p1 = new Profile(1,"a@a.dk", "name",  u1);
+        p1 = new Profile(1, "a@a.dk", "name", u1);
         j1.setProfile(p1);
         p1.setJourneys(journeys);
 
-        try{
+        try {
             em.getTransaction().begin();
             em.persist(u1);
             em.persist(u2);
@@ -117,7 +122,7 @@ public class ProfileResourceTest {
             em.persist(trip1);
             em.persist(j1);
             em.getTransaction().commit();
-        }finally {
+        } finally {
             em.close();
         }
 
@@ -128,6 +133,7 @@ public class ProfileResourceTest {
         System.out.println("Testing is server UP");
         given().when().get("/profile").then().statusCode(200);
     }
+
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
@@ -135,6 +141,7 @@ public class ProfileResourceTest {
                 .when().get("/profile")
                 .then().statusCode(200);
     }
+
     @Test
     public void testLogResponse() {
         System.out.println("Testing logging response details");
@@ -155,7 +162,7 @@ public class ProfileResourceTest {
 
     @Test
     public void create() {
-        ProfileDto profileDto = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
+        ProfileDto profileDto = new ProfileDto("morten@koksikoden.dk", "Morten", new ProfileDto.UserDto("Morten", "123"));
 
 
         String requestBody = GSON.toJson(profileDto);
@@ -173,8 +180,9 @@ public class ProfileResourceTest {
                 .body("id", notNullValue())
                 .body("email", equalTo(profileDto.getEmail()))
                 .body("name", equalTo(profileDto.getName()));
-                //.body("userName", equalTo(profileDto.getUser().getUserName()));
+        //.body("userName", equalTo(profileDto.getUser().getUserName()));
     }
+
     @Test
     public void updateTest() {
         p1.setEmail("MyNewEmail@email.com");
@@ -185,7 +193,7 @@ public class ProfileResourceTest {
                 .header("Content-type", ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .put("/profile/"+p1.getId())
+                .put("/profile/" + p1.getId())
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -195,30 +203,31 @@ public class ProfileResourceTest {
     }
 
     @Test
-    public void delete(){
+    public void delete() {
         given()
                 .contentType(ContentType.JSON)
-                .delete("/profile/"+ p1.getId())
+                .delete("/profile/" + p1.getId())
                 .then()
                 .statusCode(200)
                 .extract().response().as(Boolean.class);
     }
 
     @Test
-    public void getAllJourneys(){
+    public void getAllJourneys() {
         List<ProfileDto.JourneyDto> journeyDtoList;
-
         journeyDtoList = given()
                 .contentType("application/json")
                 .when()
-                .get("/profile/journeys/"+ p1.getId())
+                .get("/profile/journey/" + p1.getId())
                 .then()
-                .extract().body().jsonPath().getList("",ProfileDto.JourneyDto.class);
+                .extract().body().jsonPath().getList("", ProfileDto.JourneyDto.class);
 
 
         ProfileDto.JourneyDto journeyDto = new ProfileDto.JourneyDto(j1);
-        journeyDtoList.add(journeyDto);
-
+        List<ProfileDto.JourneyDto> list = new ArrayList<>(journeyDtoList);
+        System.out.println(journeyDto);
+        //journeyDtoList.add(journeyDto);
+        list.add(journeyDto);
         assertThat(journeyDtoList, contains(journeyDto));
     }
 }
