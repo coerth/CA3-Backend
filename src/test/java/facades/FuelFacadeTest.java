@@ -38,6 +38,7 @@ public class FuelFacadeTest {
 
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Fuel.deleteAllRows").executeUpdate();
             em.persist(f1);
             em.persist(f2);
             em.getTransaction().commit();

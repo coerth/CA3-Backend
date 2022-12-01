@@ -11,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="Journey.deleteAllRows",query = "DELETE from Journey")
 @Table(name = "journey")
 public class Journey {
     @Id

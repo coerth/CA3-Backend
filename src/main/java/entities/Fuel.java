@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="Fuel.deleteAllRows",query = "DELETE from Fuel")
 @Table(name = "fuel")
 public class Fuel {
     @Id
