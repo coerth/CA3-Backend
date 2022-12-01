@@ -68,4 +68,19 @@ public class ProfileResource {
 
         return Response.ok().entity(GSON.toJson(profileDto)).build();
     }
+
+    @GET
+    @Path("journey/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getJourneyById(@PathParam("id") int id){
+        return Response.ok().entity(GSON.toJson(FACADE.getJourneyById(id))).build();
+    }
+
+    @GET
+    @Path("journey/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllJourneys(@PathParam("id") int id){
+        return Response.ok().entity(GSON.toJson(FACADE.getAllJourneys(id))).build();
+    }
+
 }
