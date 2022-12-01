@@ -68,7 +68,7 @@ public class JourneyDto implements Serializable {
 
     public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
         this.name = name;
-        this.date = date;
+        this.date = date.toString();
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
