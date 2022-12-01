@@ -66,6 +66,16 @@ public class JourneyDto implements Serializable {
         this.profile = new ProfileDto(journey.getProfile());
     }
 
+    public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
+        this.name = name;
+        this.date = date;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.profile = profile;
+        this.journeyType = journeyType;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -255,17 +265,17 @@ public class JourneyDto implements Serializable {
      * A DTO for the {@link entities.Trip} entity
      */
     public static class TripDto implements Serializable {
-        private final Integer id;
+        private Integer id;
         @NotNull
-        private final Float distance;
+        private  Float distance;
         @NotNull
-        private final Float emission;
+        private  Float emission;
         @NotNull
-        private final Float cost;
+        private  Float cost;
         @NotNull
-        private final FuelDto1 fuel;
+        private  FuelDto1 fuel;
         @NotNull
-        private final TransportationDto transportation;
+        private  TransportationDto transportation;
 
         public TripDto(Integer id, Float distance, Float emission, Float cost, FuelDto1 fuel, TransportationDto transportation) {
             this.id = id;
@@ -333,10 +343,10 @@ public class JourneyDto implements Serializable {
          * A DTO for the {@link entities.Fuel} entity
          */
         public static class FuelDto1 implements Serializable {
-            private final Integer id;
+            private  Integer id;
             @Size(max = 45)
             @NotNull
-            private final String name;
+            private  String name;
 
             public FuelDto1(Integer id, String name) {
                 this.id = id;
@@ -377,10 +387,10 @@ public class JourneyDto implements Serializable {
          * A DTO for the {@link entities.Transportation} entity
          */
         public static class TransportationDto implements Serializable {
-            private final Integer id;
+            private  Integer id;
             @Size(max = 45)
             @NotNull
-            private final String name;
+            private  String name;
 
             public TransportationDto(Integer id, String name) {
                 this.id = id;
