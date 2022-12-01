@@ -83,6 +83,7 @@ public class ProfileFacadeTest {
     @Test
     void createProfileTest()
     {
+
         ProfileDto newProfile = new ProfileDto( "morten@koksikoden.dk", "Morten",new ProfileDto.UserDto("Morten", "123"));
         ProfileDto result = profileFacade.createProfile(newProfile);
 
@@ -94,14 +95,6 @@ public class ProfileFacadeTest {
     void deleteUsertest() {
         boolean response = profileFacade.deleteProfile(p1.getId());
         assertEquals(true, response);
-    }
-
-    @Test
-    void getById() {
-        ProfileDto.JourneyDto expected = new ProfileDto.JourneyDto(j1);
-        ProfileDto.JourneyDto actual = profileFacade.getJourneyById(j1.getProfile().getId());
-        assertEquals(expected, actual);
-        System.out.println(expected);
     }
 
     @Test

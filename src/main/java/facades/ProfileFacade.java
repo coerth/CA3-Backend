@@ -117,10 +117,4 @@ public class ProfileFacade
         return ProfileDto.JourneyDto.getDtos(journey);
     }
 
-    public ProfileDto.JourneyDto getJourneyById(int id){
-        EntityManager em = emf.createEntityManager();
-        Journey journey = em.find(Journey.class, id);
-
-        return new ProfileDto.JourneyDto(journey);
-    }
 }
