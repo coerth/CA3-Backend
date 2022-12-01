@@ -88,6 +88,7 @@ public class JourneyFacade {
     public JourneyDto getJourneyById(int id) {
         EntityManager em = emf.createEntityManager();
         Journey j = em.find(Journey.class, id);
+        System.out.println(j);
         return new JourneyDto(j);
     }
 }

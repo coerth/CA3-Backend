@@ -69,6 +69,14 @@ public class Journey {
             }
         }
     }
+    public Journey(String name,Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
+        this.name = name;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.profile = profile;
+        this.journeyType = journeyType;
+    }
 
     public Journey(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
         this.name = name;
@@ -80,6 +88,16 @@ public class Journey {
         this.journeyType = journeyType;
     }
 
+    public Journey(int id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.profile = profile;
+        this.journeyType = journeyType;
+    }
     public Journey(JourneyDto journeyDto) {
         this.name = journeyDto.getName();
         this.date = journeyDto.getDate();

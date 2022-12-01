@@ -110,7 +110,7 @@ public class JourneyFacadeTest {
     void getJourneyById () {
         JourneyDto result = journeyFacade.getJourneyById(j1.getId());
 
-        assertEquals(j1.getJourneyType(), result.getJourneyType());
+        assertEquals(j1.getName(), result.getName());
     }
 
 }
