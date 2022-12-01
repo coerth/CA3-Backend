@@ -169,24 +169,24 @@ public class ProfileResourceTest {
                 .body("name", equalTo(profileDto.getName()));
                 //.body("userName", equalTo(profileDto.getUser().getUserName()));
     }
-    /*@Test
+    @Test
     public void updateTest() {
         p1.setEmail("MyNewEmail@email.com");
-        ProfileDto ProfileDto = new ProfileDto(p1);
-        String requestBody = GSON.toJson(ProfileDto);
+        ProfileDto profileDto = new ProfileDto(p1);
+        String requestBody = GSON.toJson(profileDto);
 
         given()
                 .header("Content-type", ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .put("/Profile/"+p1.getId())
+                .put("/profile/"+p1.getId())
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(a1.getId()))
+                .body("id", equalTo(p1.getId()))
                 .body("email", equalTo("MyNewEmail@email.com"))
-                .body("firstName", equalTo("Arne"));
-    }*/
+                .body("name", equalTo("name"));
+    }
 
     @Test
     public void delete(){

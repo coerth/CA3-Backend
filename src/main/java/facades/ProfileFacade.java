@@ -1,11 +1,9 @@
 package facades;
 
-import dtos.JourneyDto;
+
 import dtos.ProfileDto;
-import dtos.TransportationDto;
 import entities.Journey;
 import entities.Profile;
-import entities.Transportation;
 import entities.User;
 import security.errorhandling.AuthenticationException;
 
@@ -73,6 +71,13 @@ public class ProfileFacade
 
         try{
             em.getTransaction().begin();
+            /*for(Journey journey : profile.getJourneys())
+            {
+                for(Trip trip : journey.getTrips())
+                {
+                    em.remove(trip);
+                }
+            }*/
             em.remove(profile);
             em.getTransaction().commit();
             u = em.find(User.class, profile.getUser().getId());
@@ -95,7 +100,7 @@ public class ProfileFacade
         return new ProfileDto(p);
     }
 
-    public ProfileDto updateProfile(ProfileDto profileDto){
+    public ProfileDto updateProfile( ProfileDto profileDto){
         EntityManager em = emf.createEntityManager();
         Profile profile = new Profile(profileDto);
 

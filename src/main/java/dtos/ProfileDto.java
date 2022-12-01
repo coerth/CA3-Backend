@@ -49,6 +49,26 @@ public class ProfileDto implements Serializable {
         }
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
+
+    public void setJourneys(Set<JourneyDto> journeys) {
+        this.journeys = journeys;
+    }
+
     public Integer getId() {
         return id;
     }

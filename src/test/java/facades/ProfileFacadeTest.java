@@ -106,4 +106,23 @@ public class ProfileFacadeTest {
         System.out.println(p1);
     }
 
+    void updateProfileTest()
+    {
+        ProfileDto newProfile = new ProfileDto( "niels@koksikoden.dk", "Niels",new ProfileDto.UserDto(u1));
+        newProfile.setId(p1.getId());
+        profileFacade.updateProfile(newProfile);
+        ProfileDto result = profileFacade.getProfileById(p1.getId());
+
+        assertEquals(newProfile.getName(), result.getName());
+
+    }
+
+    @Test
+    void getByIdProfile()
+    {
+        ProfileDto result = profileFacade.getProfileById(p1.getId());
+
+        assertEquals(p1.getName(), result.getName());
+    }
+
 }
