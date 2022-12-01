@@ -2,7 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.JourneyDto;
+import dtos.TransportationDto;
 import entities.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -22,11 +22,14 @@ import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 
-public class JourneyResourceTest {
+public class TransportationResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
@@ -34,14 +37,7 @@ public class JourneyResourceTest {
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
 
-    User u1, u2;
-    Profile p1;
-    Journey j1;
-    Journey j2;
-    JourneyType jt1;
-    Trip trip1;
     Transportation transportation1;
-    Fuel f1;
 
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
@@ -77,74 +73,50 @@ public class JourneyResourceTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
 
-        u1 = new User("John", "123");
-        u2 = new User("Bertha", "prop");
-        f1 = new Fuel("Rugbrødsmotor");
         transportation1 = new Transportation("Løb");
-        jt1 = new JourneyType("Recurring");
-        j1 = new Journey("Work", LocalDate.of(2022,1,1),200F, 20F, 2F, jt1);
-        //j1 = new Journey("Work",200F, 20F, 2F, jt1);
-
-        // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
-        LinkedHashSet journeys = new LinkedHashSet<Journey>();
-        journeys.add(j1);
-        // journeys.add(j2);
-        trip1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
-
-        p1 = new Profile(1,"a@a.dk", "name",  u1);
-        j1.setProfile(p1);
-        p1.setJourneys(journeys);
 
         try{
             em.getTransaction().begin();
-            em.persist(u1);
-            em.persist(u2);
-            em.persist(p1);
-            em.persist(f1);
-            em.persist(jt1);
             em.persist(transportation1);
-            em.persist(trip1);
-            em.persist(j1);
             em.getTransaction().commit();
         }finally {
             em.close();
         }
     }
-
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/profile").then().statusCode(200);
+        given().when().get("/transportationtype").then().statusCode(200);
     }
-
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
         given().log().all()
-                .when().get("/profile")
+                .when().get("/transportationtype")
                 .then().statusCode(200);
     }
     @Test
-    public void testLogResponse() {
-        System.out.println("Testing logging response details");
-        given()
-                .when().get("/profile")
-                .then().log().body().statusCode(200);
-    }
-
-    @Test
-    public void getJourneyById() {
+    public void getTransportationTypeById() {
         given()
                 .contentType(ContentType.JSON)
-                .get("/journey/{id}", j1.getId())
+                .get("/transportationtype/{id}", transportation1.getId())
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(j1.getId()));
+                .body("id", equalTo(transportation1.getId()));
     }
 
-    @Test
-    public void createJourney() {
+    @Test void getAll() throws Exception {
+        List<TransportationDto> transportationDtos;
 
+        transportationDtos =  given()
+                .contentType("application/json")
+                .when()
+                .get("/transportationtype")
+                .then()
+                .extract().body().jsonPath().getList("", TransportationDto.class);
+
+        TransportationDto tDto1 = new TransportationDto(transportation1);
+        assertThat(transportationDtos, containsInAnyOrder(tDto1));
     }
 }
