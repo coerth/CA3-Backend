@@ -226,7 +226,6 @@ public class ProfileResourceTest {
         ProfileDto.JourneyDto journeyDto = new ProfileDto.JourneyDto(j1);
         List<ProfileDto.JourneyDto> list = new ArrayList<>(journeyDtoList);
         System.out.println(journeyDto);
-        //journeyDtoList.add(journeyDto);
         list.add(journeyDto);
         assertThat(journeyDtoList, contains(journeyDto));
     }
