@@ -56,17 +56,20 @@ public class JourneyFacade {
             {
                 em.remove(trip);
             }
-
+            journey.getTrips().clear();
+            System.out.println(journey.getTrips().size());
             em.remove(journey);
             em.getTransaction().commit();
+        }
+        catch (IllegalArgumentException ex) {
+            System.out.println(ex);
+            return false;
         }
         finally {
             em.close();
         }
-        if ( journey == null) {
-            return true;
-        }
-        return false;
+
+        return true;
     }
 
     public JourneyDto updateJourney (JourneyDto journeyDto) {
