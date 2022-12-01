@@ -21,7 +21,7 @@ public class JourneyDto implements Serializable {
     @NotNull
     private  String name;
     @NotNull
-    private  LocalDate date;
+    private  String date;
     @NotNull
     private  Float totalEmission;
     @NotNull
@@ -37,7 +37,7 @@ public class JourneyDto implements Serializable {
     public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, ProfileDto profile, JourneyTypeDto journeyType, Set<TripDto> trips) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.date = date.toString();
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
@@ -48,7 +48,7 @@ public class JourneyDto implements Serializable {
 
     public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, ProfileDto profile, JourneyTypeDto journeyType, Set<TripDto> trips) {
         this.name = name;
-        this.date = date;
+        this.date = date.toString();
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
@@ -60,7 +60,7 @@ public class JourneyDto implements Serializable {
     public JourneyDto(Journey journey) {
         this.id = journey.getId();
         this.name = journey.getName();
-        this.date = journey.getDate();
+        this.date = journey.getDate().toString();
         this.totalEmission = journey.getTotalEmission();
         this.totalDistance = journey.getTotalDistance();
         this.profile = new ProfileDto(journey.getProfile());
@@ -68,7 +68,7 @@ public class JourneyDto implements Serializable {
 
     public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
         this.name = name;
-        this.date = date;
+        this.date = date.toString();
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
@@ -84,7 +84,7 @@ public class JourneyDto implements Serializable {
         return name;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 

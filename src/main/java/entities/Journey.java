@@ -100,7 +100,7 @@ public class Journey {
     }
     public Journey(JourneyDto journeyDto) {
         this.name = journeyDto.getName();
-        this.date = journeyDto.getDate();
+        this.date = LocalDate.parse(journeyDto.getDate());
         this.totalEmission = journeyDto.getTotalEmission();
         this.totalDistance = journeyDto.getTotalDistance();
         this.totalCost = journeyDto.getTotalCost();
