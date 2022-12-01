@@ -2,15 +2,19 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
+import io.restassured.internal.mapping.Jackson1Mapper;
+import io.restassured.mapper.ObjectMapper;
 import io.restassured.parsing.Parser;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -19,8 +23,9 @@ import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -47,6 +52,7 @@ public class ProfileResourceTest {
     Trip trip1;
     Transportation transportation1;
     Fuel f1;
+
 
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
@@ -196,5 +202,23 @@ public class ProfileResourceTest {
                 .then()
                 .statusCode(200)
                 .extract().response().as(Boolean.class);
+    }
+
+    @Test
+    public void getAllJourneys(){
+        List<ProfileDto.JourneyDto> journeyDtoList;
+
+        journeyDtoList = given()
+                .contentType("application/json")
+                .when()
+                .get("/profile/journeys/"+ p1.getId())
+                .then()
+                .extract().body().jsonPath().getList("",ProfileDto.JourneyDto.class);
+
+
+        ProfileDto.JourneyDto journeyDto = new ProfileDto.JourneyDto(j1);
+        journeyDtoList.add(journeyDto);
+
+        assertThat(journeyDtoList, contains(journeyDto));
     }
 }

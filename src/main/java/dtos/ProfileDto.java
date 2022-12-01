@@ -4,6 +4,7 @@ import entities.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.ws.rs.core.Link;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
@@ -301,8 +302,8 @@ public class ProfileDto implements Serializable {
         public JourneyDto() {
         }
 
-        public static List<ProfileDto.JourneyDto> getDtos(List<Journey> journeyList) {
-            List<ProfileDto.JourneyDto> journeyDtos = new ArrayList();
+        public static List<JourneyDto> getDtos(List<Journey> journeyList) {
+            List<ProfileDto.JourneyDto> journeyDtos = new ArrayList<>();
             journeyList.forEach(journey -> journeyDtos.add(new ProfileDto.JourneyDto(journey)));
             return journeyDtos;
         }
