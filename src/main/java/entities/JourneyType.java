@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="JourneyType.deleteAllRows",query = "DELETE from JourneyType")
 @Table(name = "journey_type")
 public class JourneyType {
     @Id
