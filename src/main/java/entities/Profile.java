@@ -106,6 +106,7 @@ public class Profile {
         this.journeys = journeys;
     }
 
+
     @Override
     public String toString() {
         return "Profile{" +
@@ -115,5 +116,11 @@ public class Profile {
                 ", user=" + user +
                 ", journeys=" + journeys +
                 '}';
+
+    }
+    public  void addJourney(Journey journey) {
+        this.journeys.add(journey);
+        journey.setProfile(this);
+
     }
 }

@@ -13,10 +13,12 @@ import java.util.Objects;
  * A DTO for the {@link entities.Transportation} entity
  */
 public class TransportationDto implements Serializable {
-    private Integer id;
+
+    private  Integer id;
     @Size(max = 45)
     @NotNull
-    private String name;
+    private  String name;
+
 
     public TransportationDto(Integer id, String name) {
         this.id = id;

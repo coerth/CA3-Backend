@@ -35,6 +35,7 @@ public class ApplicationConfig extends Application {
         resources.add(TransportationTypeResource.class);
         resources.add(FuelResource.class);
         resources.add(JourneyTypeResource.class);
+        resources.add(JourneyRescource.class);
     }
     
 }
