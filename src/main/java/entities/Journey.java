@@ -74,7 +74,6 @@ public class Journey {
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
-        this.profile = profile;
         this.journeyType = journeyType;
     }
 
@@ -84,7 +83,6 @@ public class Journey {
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
-        this.profile = profile;
         this.journeyType = journeyType;
     }
 
@@ -95,7 +93,6 @@ public class Journey {
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
-        this.profile = profile;
         this.journeyType = journeyType;
     }
     public Journey(JourneyDto journeyDto) {
@@ -116,7 +113,6 @@ public class Journey {
                 ", totalEmission=" + totalEmission +
                 ", totalDistance=" + totalDistance +
                 ", totalCost=" + totalCost +
-                ", profile=" + profile +
                 ", journeyType=" + journeyType +
                 ", trips=" + trips +
                 '}';

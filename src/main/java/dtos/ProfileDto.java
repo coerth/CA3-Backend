@@ -268,8 +268,6 @@ public class ProfileDto implements Serializable {
         private Float totalCost;
         @NotNull
         private JourneyTypeDto journeyType;
-
-        private Profile profile;
         private Set<TripDto> trips = new LinkedHashSet<>();
 
         public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
@@ -290,7 +288,6 @@ public class ProfileDto implements Serializable {
             this.totalEmission = journey.getTotalEmission();
             this.totalDistance = journey.getTotalDistance();
             this.totalCost = journey.getTotalCost();
-            this.profile = journey.getProfile();
             this.journeyType = new JourneyTypeDto(journey.getJourneyType().getId(), journey.getJourneyType().getName());
             if(journey.getTrips() != null){
                 for(Trip trip : journey.getTrips()){
@@ -371,7 +368,6 @@ public class ProfileDto implements Serializable {
                     ", totalDistance=" + totalDistance +
                     ", totalCost=" + totalCost +
                     ", journeyType=" + journeyType +
-                    ", profile=" + profile +
                     ", trips=" + trips +
                     '}';
         }
