@@ -77,6 +77,7 @@ public class TransportationResourceTest {
 
         try{
             em.getTransaction().begin();
+            em.createNamedQuery("Transportation.deleteAllRows").executeUpdate();
             em.persist(transportation1);
             em.getTransaction().commit();
         }finally {

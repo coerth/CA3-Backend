@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 
 public class ProfileResourceTest {
 
@@ -54,7 +54,7 @@ public class ProfileResourceTest {
     Journey j1;
     Journey j2;
     JourneyType jt1;
-    Trip trip1;
+    //Trip trip1;
     Transportation transportation1;
     Fuel f1;
 
@@ -105,7 +105,7 @@ public class ProfileResourceTest {
         LinkedHashSet journeys = new LinkedHashSet<Journey>();
         journeys.add(j1);
         // journeys.add(j2);
-        trip1 = new Trip(22.5F, 2600F, 0F, j1, f1, transportation1);
+        //trip1 = new Trip(22.5F, 2600F, 0F, j1, f1, transportation1);
 
         p1 = new Profile(1, "a@a.dk", "name", u1);
         j1.setProfile(p1);
@@ -113,13 +113,18 @@ public class ProfileResourceTest {
 
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Trip.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Journey.deleteAllRows").executeUpdate();
+            em.createNamedQuery("JourneyType.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Profile.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(u1);
             em.persist(u2);
             em.persist(p1);
             em.persist(f1);
             em.persist(jt1);
             em.persist(transportation1);
-            em.persist(trip1);
+            //em.persist(trip1);
             em.persist(j1);
             em.getTransaction().commit();
         } finally {
