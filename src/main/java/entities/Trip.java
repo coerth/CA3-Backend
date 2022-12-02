@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQuery(name="Trip.deleteAllRows",query = "DELETE from Trip")
 @Table(name = "trip")
 public class Trip {
     @Id
