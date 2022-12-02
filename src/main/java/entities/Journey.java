@@ -63,6 +63,7 @@ public class Journey {
         this.totalEmission = journeyDto.getTotalEmission();
         this.totalDistance = journeyDto.getTotalDistance();
         this.totalCost = journeyDto.getTotalCost();
+
         this.journeyType = new JourneyType(journeyDto.getJourneyType());
         if(journeyDto.getTrips() != null){
             for(ProfileDto.JourneyDto.TripDto tripDto : journeyDto.getTrips()){
@@ -105,7 +106,12 @@ public class Journey {
         this.totalEmission = journeyDto.getTotalEmission();
         this.totalDistance = journeyDto.getTotalDistance();
         this.totalCost = journeyDto.getTotalCost();
-        this.journeyType = new JourneyType(journeyDto.getJourneyType());
+        if(journeyDto.getProfile() != null){
+            this.profile = new Profile(journeyDto.getProfile());
+        }
+        if(journeyDto.getJourneyType() != null) {
+            this.journeyType = new JourneyType(journeyDto.getJourneyType());
+        }
     }
 
     @Override

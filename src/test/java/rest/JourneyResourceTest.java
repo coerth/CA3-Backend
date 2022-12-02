@@ -97,6 +97,13 @@ public class JourneyResourceTest {
 
         try{
             em.getTransaction().begin();
+            em.createNamedQuery("Trip.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Fuel.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Transportation.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Journey.deleteAllRows").executeUpdate();
+            em.createNamedQuery("JourneyType.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Profile.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(u1);
             em.persist(u2);
             em.persist(p1);
