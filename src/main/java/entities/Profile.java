@@ -61,10 +61,22 @@ public class Profile {
         }
     }
 
+    public Profile(JourneyDto.ProfileDto profileDto) {
+        this.id = profileDto.getId();
+        this.email = profileDto.getEmail();
+        this.name = profileDto.getName();
+    }
+
 
 
     public Profile(Integer id, String email, String name, User user) {
         this.id = id;
+        this.email = email;
+        this.name = name;
+        this.user = user;
+    }
+
+    public Profile(String email, String name, User user) {
         this.email = email;
         this.name = name;
         this.user = user;

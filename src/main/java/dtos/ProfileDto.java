@@ -39,7 +39,9 @@ public class ProfileDto implements Serializable {
     }
 
     public ProfileDto(Profile profile) {
-        this.id = profile.getId();
+        if(profile.getId() != null) {
+            this.id = profile.getId();
+        }
         this.email = profile.getEmail();
         this.name = profile.getName();
         this.user = new UserDto(profile.getUser());
@@ -266,6 +268,9 @@ public class ProfileDto implements Serializable {
         private Float totalDistance;
         @NotNull
         private Float totalCost;
+
+        @NotNull
+        private  ProfileDto profileDto;
         @NotNull
         private JourneyTypeDto journeyType;
         private Set<TripDto> trips = new LinkedHashSet<>();

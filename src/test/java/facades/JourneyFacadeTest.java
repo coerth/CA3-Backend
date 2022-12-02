@@ -5,6 +5,7 @@ import dtos.ProfileDto;
 import entities.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
@@ -57,12 +58,21 @@ public class JourneyFacadeTest {
         j1.addTrip(t1);
 
         j1.setProfile(p1);
+
         journeyProfileDto = new JourneyDto.ProfileDto(p1);
+        System.out.println(journeyProfileDto);
         journeyJourneyTypeDto = new JourneyDto.JourneyTypeDto(jt1);
         p1.addJourney(j1);
 
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Trip.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Fuel.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Transportation.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Journey.deleteAllRows").executeUpdate();
+            em.createNamedQuery("JourneyType.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Profile.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(u1);
             em.persist(p1);
             em.persist(f1);
@@ -75,10 +85,13 @@ public class JourneyFacadeTest {
             em.close();
         }
     }
+    @Disabled
     @Test
     void createJourneyTest() {
 
+
         JourneyDto newJourney = new JourneyDto("Til træning",LocalDate.of(2022,11,10), 20.5F, 0.2F, 90F, journeyProfileDto,journeyJourneyTypeDto, trips);
+        System.out.println(newJourney);
         JourneyDto result = journeyFacade.createJourney(newJourney);
 
         assertNotNull(result.getId());
