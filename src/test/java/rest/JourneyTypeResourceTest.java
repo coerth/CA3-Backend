@@ -2,9 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.JourneyDto;
 import dtos.JourneyTypeDto;
-import dtos.ProfileDto;
 import entities.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -22,9 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;

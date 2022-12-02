@@ -1,6 +1,5 @@
 package facades;
 
-import entities.Profile;
 import entities.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +57,6 @@ public class UserFacadeTest {
     void verifyPassword() throws AuthenticationException {
         String passExpected = "123";
         User user = userFacade.getVeryfiedUser("John", "123");
-        System.out.println(user.getUserPass());
         String returnedPass = user.getUserPass();
         boolean decryptPass = BCrypt.checkpw(passExpected,returnedPass);
         assertTrue(decryptPass);

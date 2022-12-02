@@ -2,7 +2,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.JourneyDto;
 import entities.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -25,7 +24,6 @@ import java.util.LinkedHashSet;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-
 public class JourneyResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -37,7 +35,6 @@ public class JourneyResourceTest {
     User u1, u2;
     Profile p1;
     Journey j1;
-    Journey j2;
     JourneyType jt1;
     Trip trip1;
     Transportation transportation1;
@@ -83,12 +80,9 @@ public class JourneyResourceTest {
         transportation1 = new Transportation("Løb");
         jt1 = new JourneyType("Recurring");
         j1 = new Journey("Work", LocalDate.of(2022,1,1),200F, 20F, 2F, jt1);
-        //j1 = new Journey("Work",200F, 20F, 2F, jt1);
 
-        // j2 = new Journey("Home", LocalDate.of(2022,11,10),trip1.getEmission(),trip1.getDistance(),trip1.getCost(), jt1);
         LinkedHashSet journeys = new LinkedHashSet<Journey>();
         journeys.add(j1);
-        // journeys.add(j2);
         trip1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
 
         p1 = new Profile(1,"a@a.dk", "name",  u1);

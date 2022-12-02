@@ -2,7 +2,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
 import io.restassured.RestAssured;
@@ -10,8 +9,6 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 
 import io.restassured.http.ContentType;
-import io.restassured.internal.mapping.Jackson1Mapper;
-import io.restassured.mapper.ObjectMapper;
 import io.restassured.parsing.Parser;
 
 import java.net.URI;
@@ -23,7 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 
-import org.apache.http.HttpStatus;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;

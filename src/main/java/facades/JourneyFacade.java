@@ -29,7 +29,6 @@ public class JourneyFacade {
         EntityManager em = emf.createEntityManager();
 
         Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
-        System.out.println(profile);
         Journey journey = new Journey(journeyDto);
         journey.setProfile(profile);
         profile.getJourneys().add(journey);

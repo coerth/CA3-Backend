@@ -141,7 +141,6 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
-                ", profile=" + profile +
                 '}';
     }
 }

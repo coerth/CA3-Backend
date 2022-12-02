@@ -5,7 +5,6 @@ import entities.Role;
 import entities.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
-import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
 import javax.persistence.EntityManager;
