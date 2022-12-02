@@ -1,5 +1,10 @@
 package dtos;
 
+import entities.Journey;
+import entities.JourneyType;
+import entities.Profile;
+import entities.User;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -7,35 +12,76 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * A DTO for the {@link entities.Journey} entity
+ */
 public class JourneyDto implements Serializable {
-    private final Integer id;
+    private  Integer id;
     @Size(max = 45)
     @NotNull
-    private final String name;
+    private  String name;
     @NotNull
-    private final LocalDate date;
+    private  String date;
     @NotNull
-    private final Float totalEmission;
+    private  Float totalEmission;
     @NotNull
-    private final Float totalDistance;
+    private  Float totalDistance;
     @NotNull
-    private final Float totalCost;
+    private  Float totalCost;
     @NotNull
-    private final ProfileDto profile;
+    private  ProfileDto profile;
     @NotNull
-    private final JourneyTypeDto journeyType;
-    private final Set<TripDto> trips;
+    private  JourneyTypeDto journeyType;
+    private  Set<TripDto> trips;
 
     public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, ProfileDto profile, JourneyTypeDto journeyType, Set<TripDto> trips) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.date = date.toString();
         this.totalEmission = totalEmission;
         this.totalDistance = totalDistance;
         this.totalCost = totalCost;
         this.profile = profile;
         this.journeyType = journeyType;
         this.trips = trips;
+    }
+
+    public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, ProfileDto profile, JourneyTypeDto journeyType, Set<TripDto> trips) {
+        this.name = name;
+        this.date = date.toString();
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.profile = profile;
+        this.journeyType = journeyType;
+        this.trips = trips;
+    }
+
+    public JourneyDto(Journey journey) {
+        if(journey.getId() != null){
+            this.id = journey.getId();
+        }
+        this.name = journey.getName();
+        this.date = journey.getDate().toString();
+        this.totalEmission = journey.getTotalEmission();
+        this.totalDistance = journey.getTotalDistance();
+        if(journey.getTotalCost() != null) {
+            this.totalCost = journey.getTotalCost();
+        }
+        this.profile = new ProfileDto(journey.getProfile());
+        if(journey.getJourneyType() != null) {
+            this.journeyType = new JourneyTypeDto(journey.getJourneyType());
+        }
+    }
+
+    public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
+        this.name = name;
+        this.date = date.toString();
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.profile = profile;
+        this.journeyType = journeyType;
     }
 
     public Integer getId() {
@@ -46,7 +92,7 @@ public class JourneyDto implements Serializable {
         return name;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -109,15 +155,45 @@ public class JourneyDto implements Serializable {
                 "trips = " + trips + ")";
     }
 
-    public static class ProfileDto implements Serializable {
-        private final Integer id;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-        public ProfileDto(Integer id) {
+    /**
+     * A DTO for the {@link entities.Profile} entity
+     */
+    public static class ProfileDto implements Serializable {
+        private  Integer id;
+        @Size(max = 45)
+        @NotNull
+        private  String email;
+        @Size(max = 45)
+        @NotNull
+        private  String name;
+
+        public ProfileDto(Integer id, String email, String name) {
             this.id = id;
+            this.email = email;
+            this.name = name;
         }
+
+        public ProfileDto(Profile profile) {
+            this.id = profile.getId();
+            this.email= profile.getEmail();
+            this.name = profile.getName();
+        }
+
 
         public Integer getId() {
             return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getName() {
+            return name;
         }
 
         @Override
@@ -125,30 +201,42 @@ public class JourneyDto implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ProfileDto entity = (ProfileDto) o;
-            return Objects.equals(this.id, entity.id);
+            return Objects.equals(this.id, entity.id) &&
+                    Objects.equals(this.email, entity.email) &&
+                    Objects.equals(this.name, entity.name);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id);
+            return Objects.hash(id, email, name);
         }
 
         @Override
         public String toString() {
             return getClass().getSimpleName() + "(" +
-                    "id = " + id + ")";
+                    "id = " + id + ", " +
+                    "email = " + email + ", " +
+                    "name = " + name + ")";
         }
     }
 
+    /**
+     * A DTO for the {@link entities.JourneyType} entity
+     */
     public static class JourneyTypeDto implements Serializable {
-        private final Integer id;
+        private  Integer id;
         @Size(max = 45)
         @NotNull
-        private final String name;
+        private  String name;
 
         public JourneyTypeDto(Integer id, String name) {
             this.id = id;
             this.name = name;
+        }
+
+        public JourneyTypeDto(JourneyType journeyType) {
+            this.id = journeyType.getId();
+            this.name = journeyType.getName();
         }
 
         public Integer getId() {
@@ -181,20 +269,23 @@ public class JourneyDto implements Serializable {
         }
     }
 
+    /**
+     * A DTO for the {@link entities.Trip} entity
+     */
     public static class TripDto implements Serializable {
-        private final Integer id;
+        private Integer id;
         @NotNull
-        private final Float distance;
+        private  Float distance;
         @NotNull
-        private final Float emission;
+        private  Float emission;
         @NotNull
-        private final Float cost;
+        private  Float cost;
         @NotNull
-        private final FuelDto fuel;
+        private  FuelDto1 fuel;
         @NotNull
-        private final TransportationDto transportation;
+        private  TransportationDto transportation;
 
-        public TripDto(Integer id, Float distance, Float emission, Float cost, FuelDto fuel, TransportationDto transportation) {
+        public TripDto(Integer id, Float distance, Float emission, Float cost, FuelDto1 fuel, TransportationDto transportation) {
             this.id = id;
             this.distance = distance;
             this.emission = emission;
@@ -219,7 +310,7 @@ public class JourneyDto implements Serializable {
             return cost;
         }
 
-        public FuelDto getFuel() {
+        public FuelDto1 getFuel() {
             return fuel;
         }
 
@@ -256,13 +347,16 @@ public class JourneyDto implements Serializable {
                     "transportation = " + transportation + ")";
         }
 
-        public static class FuelDto implements Serializable {
-            private final Integer id;
+        /**
+         * A DTO for the {@link entities.Fuel} entity
+         */
+        public static class FuelDto1 implements Serializable {
+            private  Integer id;
             @Size(max = 45)
             @NotNull
-            private final String name;
+            private  String name;
 
-            public FuelDto(Integer id, String name) {
+            public FuelDto1(Integer id, String name) {
                 this.id = id;
                 this.name = name;
             }
@@ -279,7 +373,7 @@ public class JourneyDto implements Serializable {
             public boolean equals(Object o) {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
-                FuelDto entity = (FuelDto) o;
+                FuelDto1 entity = (FuelDto1) o;
                 return Objects.equals(this.id, entity.id) &&
                         Objects.equals(this.name, entity.name);
             }
@@ -297,11 +391,14 @@ public class JourneyDto implements Serializable {
             }
         }
 
+        /**
+         * A DTO for the {@link entities.Transportation} entity
+         */
         public static class TransportationDto implements Serializable {
-            private final Integer id;
+            private  Integer id;
             @Size(max = 45)
             @NotNull
-            private final String name;
+            private  String name;
 
             public TransportationDto(Integer id, String name) {
                 this.id = id;

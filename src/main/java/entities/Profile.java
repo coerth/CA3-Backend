@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.JourneyDto;
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "profile")
+@NamedQuery(name="Profile.deleteAllRows",query = "DELETE from Profile")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +29,48 @@ public class Profile {
     private String name;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_name", nullable = false)
-    private entities.User userName;
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Set<Journey> journeys = new LinkedHashSet<>();
+
+    public Profile() {
+    }
+
+    public Profile(ProfileDto profileDto, User user) {
+        if(profileDto.getId() != null)
+        {
+            this.id = profileDto.getId();
+        }
+        this.email = profileDto.getEmail();
+        this.name = profileDto.getName();
+        this.user = user;
+    }
+
+    public Profile(ProfileDto profileDto){
+        this.id = profileDto.getId();
+        this.email = profileDto.getEmail();
+        this.name = profileDto.getName();
+        this.user = new User(profileDto.getUser());
+        if(profileDto.getJourneys() != null){
+            for(ProfileDto.JourneyDto journeyDto : profileDto.getJourneys()){
+                this.journeys.add(new Journey(journeyDto));
+            }
+        }
+    }
+
+
+
+    public Profile(Integer id, String email, String name, User user) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.user = user;
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -56,12 +96,12 @@ public class Profile {
         this.name = name;
     }
 
-    public entities.User getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(entities.User userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Journey> getJourneys() {
@@ -72,4 +112,21 @@ public class Profile {
         this.journeys = journeys;
     }
 
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", user=" + user +
+                ", journeys=" + journeys +
+                '}';
+
+    }
+    public  void addJourney(Journey journey) {
+        this.journeys.add(journey);
+        journey.setProfile(this);
+
+    }
 }

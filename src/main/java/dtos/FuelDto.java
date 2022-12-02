@@ -1,19 +1,38 @@
 package dtos;
 
+import entities.Fuel;
+import entities.Transportation;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+/**
+ * A DTO for the {@link entities.Fuel} entity
+ */
 public class FuelDto implements Serializable {
-    private final Integer id;
+    private  Integer id;
     @Size(max = 45)
     @NotNull
-    private final String name;
+    private  String name;
 
     public FuelDto(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public FuelDto(Fuel fuel){
+        this.id = fuel.getId();
+        this.name = fuel.getName();
+    }
+
+    public static List<FuelDto> getDtos(List<Fuel> fuelList) {
+        List<FuelDto> fuelDtos = new ArrayList();
+        fuelList.forEach(fuel -> fuelDtos.add(new dtos.FuelDto(fuel)));
+        return fuelDtos;
     }
 
     public Integer getId() {

@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.JourneyDto;
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,6 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="Journey.deleteAllRows",query = "DELETE from Journey")
 @Table(name = "journey")
 public class Journey {
     @Id
@@ -42,12 +46,81 @@ public class Journey {
     private Profile profile;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "journey_type_id", nullable = false)
     private JourneyType journeyType;
 
-    @OneToMany(mappedBy = "journey")
+    @OneToMany(mappedBy = "journey", orphanRemoval = true, cascade = {CascadeType.ALL})
     private Set<Trip> trips = new LinkedHashSet<>();
+
+    public Journey() {
+    }
+
+    public Journey(ProfileDto.JourneyDto journeyDto) {
+        this.id = journeyDto.getId();
+        this.name = journeyDto.getName();
+        this.date = LocalDate.parse(journeyDto.getDate());
+        this.totalEmission = journeyDto.getTotalEmission();
+        this.totalDistance = journeyDto.getTotalDistance();
+        this.totalCost = journeyDto.getTotalCost();
+        this.journeyType = new JourneyType(journeyDto.getJourneyType());
+        if(journeyDto.getTrips() != null){
+            for(ProfileDto.JourneyDto.TripDto tripDto : journeyDto.getTrips()){
+                this.trips.add(new Trip(tripDto));
+            }
+        }
+    }
+    public Journey(String name,Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
+        this.name = name;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.journeyType = journeyType;
+    }
+
+    public Journey(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
+        this.name = name;
+        this.date = date;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.journeyType = journeyType;
+    }
+
+    public Journey(int id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyType journeyType) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.totalEmission = totalEmission;
+        this.totalDistance = totalDistance;
+        this.totalCost = totalCost;
+        this.journeyType = journeyType;
+    }
+    public Journey(JourneyDto journeyDto) {
+        if(journeyDto.getId() != null){
+            this.id = journeyDto.getId();
+        }
+        this.name = journeyDto.getName();
+        this.date = LocalDate.parse(journeyDto.getDate());
+        this.totalEmission = journeyDto.getTotalEmission();
+        this.totalDistance = journeyDto.getTotalDistance();
+        this.totalCost = journeyDto.getTotalCost();
+        this.journeyType = new JourneyType(journeyDto.getJourneyType());
+    }
+
+    @Override
+    public String toString() {
+        return "Journey{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", totalEmission=" + totalEmission +
+                ", totalDistance=" + totalDistance +
+                ", totalCost=" + totalCost +
+                ", journeyType=" + journeyType +
+                ", trips=" + trips +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -120,5 +193,14 @@ public class Journey {
     public void setTrips(Set<Trip> trips) {
         this.trips = trips;
     }
+
+    public void addTrip(Trip trip) {
+        this.trips.add(trip);
+        trip.setJourney(this);
+    }
+
+
+
+
 
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.ProfileDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="Transportation.deleteAllRows",query = "DELETE from Transportation ")
 @Table(name = "transportation")
 public class Transportation {
     @Id
@@ -21,6 +24,18 @@ public class Transportation {
 
     @OneToMany(mappedBy = "transportation")
     private Set<Trip> trips = new LinkedHashSet<>();
+
+    public Transportation() {
+    }
+
+    public Transportation(ProfileDto.JourneyDto.TripDto.TransportationDto transportationDto) {
+        this.id = transportationDto.getId();
+        this.name = transportationDto.getName();
+    }
+
+    public Transportation(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
