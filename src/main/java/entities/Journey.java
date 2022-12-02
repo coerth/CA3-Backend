@@ -97,6 +97,9 @@ public class Journey {
         this.journeyType = journeyType;
     }
     public Journey(JourneyDto journeyDto) {
+        if(journeyDto.getId() != null){
+            this.id = journeyDto.getId();
+        }
         this.name = journeyDto.getName();
         this.date = LocalDate.parse(journeyDto.getDate());
         this.totalEmission = journeyDto.getTotalEmission();

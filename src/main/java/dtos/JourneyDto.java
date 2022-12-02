@@ -58,12 +58,20 @@ public class JourneyDto implements Serializable {
     }
 
     public JourneyDto(Journey journey) {
-        this.id = journey.getId();
+        if(journey.getId() != null){
+            this.id = journey.getId();
+        }
         this.name = journey.getName();
         this.date = journey.getDate().toString();
         this.totalEmission = journey.getTotalEmission();
         this.totalDistance = journey.getTotalDistance();
+        if(journey.getTotalCost() != null) {
+            this.totalCost = journey.getTotalCost();
+        }
         this.profile = new ProfileDto(journey.getProfile());
+        if(journey.getJourneyType() != null) {
+            this.journeyType = new JourneyTypeDto(journey.getJourneyType());
+        }
     }
 
     public JourneyDto(String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, JourneyTypeDto journeyType) {
