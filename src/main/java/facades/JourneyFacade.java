@@ -3,6 +3,7 @@ package facades;
 import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.Journey;
+import entities.JourneyType;
 import entities.Profile;
 import entities.Trip;
 
@@ -74,7 +75,11 @@ public class JourneyFacade {
 
     public JourneyDto updateJourney (JourneyDto journeyDto) {
         EntityManager em = emf.createEntityManager();
+        Profile profile = em.find(Profile.class, journeyDto.getProfile().getId());
+        JourneyType type = em.find(JourneyType.class, journeyDto.getJourneyType().getId());
         Journey journey = new Journey(journeyDto);
+        journey.setProfile(profile);
+        journey.setJourneyType(type);
 
         try
         {

@@ -93,12 +93,10 @@ public class JourneyFacadeTest {
 
     @Test
     void updateJourneytest() {
-        JourneyDto newJourney = new JourneyDto("Til håndbold", LocalDate.of(2022, 9,11), 80.1F, 20F,2F,journeyProfileDto,journeyJourneyTypeDto, trips);
-        newJourney.setId(j1.getId());
-        journeyFacade.updateJourney(newJourney);
-        JourneyDto result = journeyFacade.getJourneyById(j1.getId());
-
-        assertEquals(newJourney.getName(), result.getName());
+         j1.setName("Håndbold");
+         JourneyDto expected = new JourneyDto(j1);
+         JourneyDto actual = journeyFacade.updateJourney(expected);
+         assertEquals(expected, actual);
     }
 
     @Test

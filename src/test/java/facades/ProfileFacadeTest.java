@@ -65,6 +65,8 @@ public class ProfileFacadeTest {
 
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Journey.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Profile.deleteAllRows").executeUpdate();
             em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.persist(u1);
             em.persist(u2);

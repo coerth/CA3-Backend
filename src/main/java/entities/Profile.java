@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "profile")
+@NamedQuery(name="Profile.deleteAllRows",query = "DELETE from Profile")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,12 +61,16 @@ public class Profile {
         }
     }
 
+
+
     public Profile(Integer id, String email, String name, User user) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.user = user;
     }
+
+
 
     public Integer getId() {
         return id;
