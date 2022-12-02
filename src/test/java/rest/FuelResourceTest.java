@@ -21,12 +21,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
-import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.glassfish.jersey.internal.guava.Predicates.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 

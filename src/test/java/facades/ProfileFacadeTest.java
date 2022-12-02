@@ -1,7 +1,5 @@
 package facades;
 
-
-import dtos.JourneyDto;
 import dtos.ProfileDto;
 import entities.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -108,8 +106,6 @@ public class ProfileFacadeTest {
         int expected = 3;
         List<ProfileDto.JourneyDto> journeyDtos = profileFacade.getAllJourneys(p1.getId());
         assertEquals(expected, journeyDtos.size());
-        System.out.println(expected);
-        System.out.println(p1);
     }
 
     void updateProfileTest()

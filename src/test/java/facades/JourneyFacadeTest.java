@@ -49,7 +49,7 @@ public class JourneyFacadeTest {
         EntityManager em = emf.createEntityManager();
 
         u1 = new User("John", "123");
-        p1 = new Profile(1,"a@a.dk", "JohnnyBoy", u1);
+        p1 = new Profile("a@a.dk", "JohnnyBoy", u1);
         f1 = new Fuel("Rugbrødsmotor");
         transportation1 = new Transportation("Løb");
         jt1 = new JourneyType("Recurring");
@@ -58,10 +58,8 @@ public class JourneyFacadeTest {
         j1.addTrip(t1);
 
         j1.setProfile(p1);
+        u1.setProfile(p1);
 
-        journeyProfileDto = new JourneyDto.ProfileDto(p1);
-        System.out.println(journeyProfileDto);
-        journeyJourneyTypeDto = new JourneyDto.JourneyTypeDto(jt1);
         p1.addJourney(j1);
 
         try {
@@ -81,17 +79,19 @@ public class JourneyFacadeTest {
             em.persist(t1);
             em.persist(j1);
             em.getTransaction().commit();
+
+            journeyProfileDto = new JourneyDto.ProfileDto(p1);
+            journeyJourneyTypeDto = new JourneyDto.JourneyTypeDto(jt1);
         } finally {
             em.close();
         }
     }
-    @Disabled
+//    @Disabled
     @Test
     void createJourneyTest() {
 
 
         JourneyDto newJourney = new JourneyDto("Til træning",LocalDate.of(2022,11,10), 20.5F, 0.2F, 90F, journeyProfileDto,journeyJourneyTypeDto, trips);
-        System.out.println(newJourney);
         JourneyDto result = journeyFacade.createJourney(newJourney);
 
         assertNotNull(result.getId());

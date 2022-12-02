@@ -1,7 +1,5 @@
 package facades;
 
-import dtos.JourneyDto;
-import dtos.ProfileDto;
 import dtos.TransportationDto;
 import entities.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +9,6 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,7 +62,5 @@ public class TransportationFacadeTest {
         int expected = 1;
         List<TransportationDto> transportationDtos = transportationTypeFacade.getAllTranportationType();
         assertEquals(expected, transportationDtos.size());
-
-
     }
 }
