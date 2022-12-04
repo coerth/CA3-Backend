@@ -43,8 +43,8 @@ public class HttpUtils {
 
     }
 
-    public static EmissionDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
-        String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
+    public static JourneyDto.TripDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
+        /*String apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMjUzMGM4ZmIyMTdlYmJiYjg3ZjgwMDdjNDZjYTc5ODMwZjQxNzgzZDVhZTExNTUwMTA4ODdjMzY1NGRlMWNiNDI4YTc2ZGNmMjM3YWFlMGUiLCJpYXQiOjE2NjkzNzA5OTYsIm5iZiI6MTY2OTM3MDk5NiwiZXhwIjoxNzAwOTA2OTk2LCJzdWIiOiIyMzI0Iiwic2NvcGVzIjpbXX0.Ot63eEC6iCdCaea2TKX7DlMgvCpKGM8CfBuMSGivsTOUVerSUyQGUR-SA5e2-5ffN0ATmMavvFtK0f6SgCfETg";
 
         URL url = new URL("https://app.trycarbonapi.com/api/carTravel");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -71,6 +71,17 @@ public class HttpUtils {
             }
             System.out.println(response.toString());
             return GSON.fromJson(response.toString(), EmissionDto.class);
+        }*/
+
+        if(tripDto.getTransportation().getId() == 1)
+        {
+            tripDto.setEmission(40.3f);
         }
+        else
+        {
+            tripDto.setEmission(16.9f);
+        }
+
+        return tripDto;
     }
 }

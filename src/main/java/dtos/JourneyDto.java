@@ -122,6 +122,34 @@ public class JourneyDto implements Serializable {
         return trips;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTotalEmission(Float totalEmission) {
+        this.totalEmission = totalEmission;
+    }
+
+    public void setTotalDistance(Float totalDistance) {
+        this.totalDistance = totalDistance;
+    }
+
+    public void setTotalCost(Float totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public void setProfile(ProfileDto profile) {
+        this.profile = profile;
+    }
+
+    public void setJourneyType(JourneyTypeDto journeyType) {
+        this.journeyType = journeyType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -352,6 +380,30 @@ public class JourneyDto implements Serializable {
                     "cost = " + cost + ", " +
                     "fuel = " + fuel + ", " +
                     "transportation = " + transportation + ")";
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public void setDistance(Float distance) {
+            this.distance = distance;
+        }
+
+        public void setEmission(Float emission) {
+            this.emission = emission;
+        }
+
+        public void setCost(Float cost) {
+            this.cost = cost;
+        }
+
+        public void setFuel(FuelDto1 fuel) {
+            this.fuel = fuel;
+        }
+
+        public void setTransportation(TransportationDto transportation) {
+            this.transportation = transportation;
         }
 
         /**

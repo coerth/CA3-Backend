@@ -5,12 +5,15 @@ import dtos.JourneyDto;
 import utils.HttpUtils;
 
 import javax.persistence.EntityManagerFactory;
+import java.io.IOException;
 
 public class CalculationFacade {
 
     private static EntityManagerFactory emf;
 
     private static CalculationFacade instance;
+    JourneyFacade journeyFacade = JourneyFacade.getInstance(emf);
+
 
     Gson gson = new Gson();
 
@@ -34,11 +37,23 @@ public class CalculationFacade {
         return null;
     }
 
-    public JourneyDto getJourney(JourneyDto journeyDto){
+    public JourneyDto getJourney(JourneyDto journeyDto) throws IOException {
         for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
-
+            tripDto = HttpUtils.getEmission(tripDto);
+            journeyDto.setTotalEmission(journeyDto.getTotalEmission() + tripDto.getEmission());
+            journeyDto.setTotalDistance(journeyDto.getTotalDistance() + tripDto.getDistance());
         }
 
-        return null;
+        if(journeyDto.getId() != null)
+        {
+            journeyFacade.updateJourney(journeyDto);
+        }
+        else
+        {
+            journeyFacade.createJourney(journeyDto);
+        }
+
+        return journeyDto;
+
     }
 }
