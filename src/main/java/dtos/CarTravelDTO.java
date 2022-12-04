@@ -9,10 +9,12 @@ public class CarTravelDTO {
 
     private final String vehicle;
 
+
     public CarTravelDTO(float distance, String vehicle) {
         this.distance = distance;
         this.vehicle = vehicle;
     }
+
 
     public float getDistance() {
         return distance;
@@ -21,6 +23,4 @@ public class CarTravelDTO {
     public String getVehicle() {
         return vehicle;
     }
-
-
 }

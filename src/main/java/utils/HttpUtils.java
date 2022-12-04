@@ -2,20 +2,18 @@ package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import dtos.CarTravelDTO;
 import dtos.EmissionDto;
 import dtos.JourneyDto;
-import dtos.TripDto;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -42,6 +40,7 @@ public class HttpUtils {
         } catch (IOException | InterruptedException exception) {
             throw new RuntimeException(exception);
         }
+
     }
 
     public static EmissionDto getEmission(JourneyDto.TripDto tripDto) throws IOException {
