@@ -35,7 +35,7 @@ public class SetupTestUsers {
 
     JourneyDto.TripDto tripDto = new JourneyDto.TripDto(3.3f, new JourneyDto.TripDto.TransportationDto("SmallDieselCar"));
 
-    EmissionDto emissionDto = HttpUtils.getEmission(tripDto);
+    //EmissionDto emissionDto = HttpUtils.getEmission(tripDto);
 
 
 
