@@ -296,6 +296,11 @@ public class JourneyDto implements Serializable {
             this.transportation = transportation;
         }
 
+        public TripDto(Float distance, TransportationDto transportationDto){
+            this.distance = distance;
+            this.transportation = transportationDto;
+        }
+
         public Integer getId() {
             return id;
         }
@@ -404,6 +409,10 @@ public class JourneyDto implements Serializable {
 
             public TransportationDto(Integer id, String name) {
                 this.id = id;
+                this.name = name;
+            }
+
+            public TransportationDto(String name) {
                 this.name = name;
             }
 
