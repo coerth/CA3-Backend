@@ -45,6 +45,9 @@ public class User {
     }
 
     public User(ProfileDto.UserDto userDto) {
+        if(userDto.getId() != null) {
+            this.id =  userDto.getId();
+        }
         this.userName = userDto.getUserName();
         this.userPass = BCrypt.hashpw(userDto.getUserPass(), BCrypt.gensalt());
         if(userDto.getRoles() != null){
