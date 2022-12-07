@@ -1,14 +1,12 @@
 package dtos;
 
-import entities.Journey;
-import entities.JourneyType;
-import entities.Profile;
-import entities.User;
+import entities.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +30,7 @@ public class JourneyDto implements Serializable {
     private  ProfileDto profile;
     @NotNull
     private  JourneyTypeDto journeyType;
-    private  Set<TripDto> trips;
+    private  Set<TripDto> trips = new LinkedHashSet<>();
 
     public JourneyDto(Integer id, String name, LocalDate date, Float totalEmission, Float totalDistance, Float totalCost, ProfileDto profile, JourneyTypeDto journeyType, Set<TripDto> trips) {
         this.id = id;
@@ -73,6 +71,11 @@ public class JourneyDto implements Serializable {
         }
         if(journey.getJourneyType() != null) {
             this.journeyType = new JourneyTypeDto(journey.getJourneyType());
+        }
+        if(journey.getTrips() != null){
+            for(Trip trip : journey.getTrips()){
+                this.trips.add(new TripDto(trip));
+            }
         }
     }
 
@@ -329,6 +332,15 @@ public class JourneyDto implements Serializable {
             this.transportation = transportationDto;
         }
 
+        public TripDto(Trip trip){
+            this.id = trip.getId();
+            this.distance = trip.getDistance();
+            this.emission = trip.getEmission();
+            this.cost = trip.getCost();
+            this.fuel = new FuelDto1(trip.getFuel());
+            this.transportation = new TransportationDto(trip.getTransportation());
+        }
+
         public Integer getId() {
             return id;
         }
@@ -420,6 +432,11 @@ public class JourneyDto implements Serializable {
                 this.name = name;
             }
 
+            public FuelDto1(Fuel fuel){
+                this.id = fuel.getId();
+                this.name = fuel.getName();
+            }
+
             public Integer getId() {
                 return id;
             }
@@ -462,6 +479,11 @@ public class JourneyDto implements Serializable {
             public TransportationDto(Integer id, String name) {
                 this.id = id;
                 this.name = name;
+            }
+
+            public TransportationDto(Transportation transportation){
+                this.id = transportation.getId();
+                this.name = transportation.getName();
             }
 
             public TransportationDto(String name) {
