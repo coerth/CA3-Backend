@@ -112,6 +112,11 @@ public class Journey {
         if(journeyDto.getJourneyType() != null) {
             this.journeyType = new JourneyType(journeyDto.getJourneyType());
         }
+        if(journeyDto.getTrips() != null){
+            for(JourneyDto.TripDto tripDto : journeyDto.getTrips()){
+                this.trips.add(new Trip(tripDto));
+            }
+        }
     }
 
     @Override

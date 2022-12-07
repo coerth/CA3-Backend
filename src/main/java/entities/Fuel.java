@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -30,6 +31,13 @@ public class Fuel {
 
     public Fuel(ProfileDto.JourneyDto.TripDto.FuelDto fuelDto) {
         this.id = fuelDto.getId();
+        this.name = fuelDto.getName();
+    }
+
+    public Fuel(JourneyDto.TripDto.FuelDto1 fuelDto){
+        if(fuelDto.getId() != null){
+            this.id = fuelDto.getId();
+        }
         this.name = fuelDto.getName();
     }
 
