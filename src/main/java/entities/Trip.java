@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -46,6 +47,16 @@ public class Trip {
 
     public Trip(ProfileDto.JourneyDto.TripDto tripDto) {
         this.id = tripDto.getId();
+        this.distance = tripDto.getDistance();
+        this.emission = tripDto.getEmission();
+        this.cost = tripDto.getCost();
+        this.fuel = new Fuel(tripDto.getFuel());
+        this.transportation = new Transportation(tripDto.getTransportation());
+    }
+
+    public Trip(JourneyDto.TripDto tripDto){
+        if(tripDto.getId() != null){
+        this.id = tripDto.getId();}
         this.distance = tripDto.getDistance();
         this.emission = tripDto.getEmission();
         this.cost = tripDto.getCost();

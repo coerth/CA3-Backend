@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.JourneyDto;
 import dtos.ProfileDto;
 
 import javax.persistence.*;
@@ -32,6 +33,14 @@ public class Transportation {
         this.id = transportationDto.getId();
         this.name = transportationDto.getName();
     }
+
+    public Transportation(JourneyDto.TripDto.TransportationDto transportationDto) {
+        if(transportationDto.getId() != null){
+        this.id = transportationDto.getId();
+        }
+        this.name = transportationDto.getName();
+    }
+
 
     public Transportation(String name) {
         this.name = name;
