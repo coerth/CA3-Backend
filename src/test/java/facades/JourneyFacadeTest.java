@@ -55,7 +55,11 @@ public class JourneyFacadeTest {
         jt1 = new JourneyType("Recurring");
         j1 = new Journey("Work", LocalDate.of(2022,11,10),200F, 20F, 2F, jt1);
         t1 = new Trip(22.5F, 2600F, 0F, j1,f1,transportation1);
-        j1.addTrip(t1);
+
+        LinkedHashSet trips = new LinkedHashSet<Trip>();
+        trips.add(t1);
+
+        t1.setJourney(j1);
 
         j1.setProfile(p1);
         u1.setProfile(p1);
